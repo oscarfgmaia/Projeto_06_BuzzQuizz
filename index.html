@@ -1,48 +1,78 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style/reset.css">
-    <link rel="stylesheet" href="./style/style.css">
-    <link rel="stylesheet" href="./style/desktop.css">
-    <title>BuzzQuizz</title>
-</head>
-<body>
-    <!--HEADER FIXO COM Z-INDEX 10 margin-top: 69px;-->
-    <header><span>BuzzQuizz</span></header>
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="./style/reset.css" />
+		<link rel="stylesheet" href="./style/style.css" />
+		<link rel="stylesheet" href="./style/desktop.css" />
+		<title>BuzzQuizz</title>
+	</head>
+	<body>
+		<!--HEADER FIXO COM Z-INDEX 10 margin-top: 69px;-->
+		<header><span>BuzzQuizz</span></header>
 
-    <!--Acho que podemos fazer as páginas escondendo as "mains"-->
-    <main class="">
-        <div class="user-create-quizz screen1">
-            <div class="step1">Comece pelo começo</div>
-            <div class="perguntas">
-                <ul>
-                    <li><input type="text" name="title-quizz-user" id="title-quizz-user" placeholder="Título do seu quizz"></li>
-                    <li><input type="text" name="url-quizz-user" id="url-quizz-user" placeholder="URL da imagem do seu quizz"></li>
-                    <li><input type="text" name="questions-quizz-user" id="questions-quizz-user" placeholder="Quantidade de perguntas do quizz"></li>
-                    <li><input type="text" name="levels-quizz-user" id="levels-quizz-user" placeholder="Quantidade de níveis do quizz"></li>
-                </ul>
-            </div>
-            <div class="btn">Prosseguir pra criar perguntas</div>
-        </div>
-    </main>
-    <!--Acho que podemos fazer as páginas escondendo as "mains"-->
-    <main class="hidden">
-        (PRÓXIMA PÁGINA AQUI)
-    </main>
+		<main class="quizz-list-page">
+			<div class="users-quizz">
+				<div class="create-your-quizz">
+					<span>Você não criou nenhum quizz ainda :(</span>
+					<div>Criar Quiz</div>
+				</div>
+			</div>
 
+			<div class="all-quizz">
+				<span>Todos os Quizzes</span>
+				<div class="quizzes">
+					// !!MiniProblema: quando não completa os 3 quizzes na linha fica um meio em branco!!
+					<div class="single-quizz">
+						<img class="" src="https://img.estadao.com.br/thumbs/640/resources/jpg/2/1/1649110304012.jpg" />
+						<div class="gradient-filter"></div>
+						<span>Testando quizz 123 aumentando as linhas para ver se passa da div</span>
+					</div>
+				</div>
+			</div>
+		</main>
 
+		<!--Acho que podemos fazer as páginas escondendo as "mains"-->
+		<main class="hidden">
+			<div class="user-create-quizz screen1">
+				<div class="step1">Comece pelo começo</div>
+				<div class="perguntas">
+					<ul>
+						<li>
+							<input type="text" name="title-quizz-user" id="title-quizz-user" placeholder="Título do seu quizz" />
+						</li>
+						<li>
+							<input type="text" name="url-quizz-user" id="url-quizz-user" placeholder="URL da imagem do seu quizz" />
+						</li>
+						<li>
+							<input
+								type="text"
+								name="questions-quizz-user"
+								id="questions-quizz-user"
+								placeholder="Quantidade de perguntas do quizz" />
+						</li>
+						<li>
+							<input
+								type="text"
+								name="levels-quizz-user"
+								id="levels-quizz-user"
+								placeholder="Quantidade de níveis do quizz" />
+						</li>
+					</ul>
+				</div>
+				<div class="btn">Prosseguir pra criar perguntas</div>
+			</div>
+		</main>
+		<!--Acho que podemos fazer as páginas escondendo as "mains"-->
+		<main class="hidden">(PRÓXIMA PÁGINA AQUI)</main>
 
-
-
-
-    <!--Scripts adicionados - ION ICONS, AXIOS, SCRIPT.JS-->
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="./scripts/script.js"></script>
-    <!--Scripts adicionados - ION ICONS, AXIOS, SCRIPT.JS-->
-</body>
+		<!--Scripts adicionados - ION ICONS, AXIOS, SCRIPT.JS-->
+		<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+		<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<script src="./scripts/script.js"></script>
+		<!--Scripts adicionados - ION ICONS, AXIOS, SCRIPT.JS-->
+	</body>
 </html>
