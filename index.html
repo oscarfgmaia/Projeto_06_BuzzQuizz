@@ -15,7 +15,8 @@
 	<!--HEADER FIXO COM Z-INDEX 10 margin-top: 69px;-->
 	<header><span>BuzzQuizz</span></header>
 
-	<main class="quizz-list-page hidden">
+	<!-- PÁGINA INICIAL -->
+	<main class="quizz-list-page">
 		<div class="create-your-quizz hidden">
 			<span>Você não criou nenhum quizz ainda :(</span>
 			<div onclick="goScreen1()">Criar Quiz</div>
@@ -49,6 +50,7 @@
 			</ul>
 		</div>
 	</main>
+	<!-- FIM PÁGINA INICIAL -->
 
 	<!--CRIAÇÃO QUIZZ PÁGINA 1-->
 	<main class="create-quizz hidden">
@@ -216,20 +218,21 @@
 	<!--FIM QUIZZ PÁGINA 3-->
 
 
-		<!--CRIAÇÃO QUIZZ PÁGINA 4-->
-		<main class="">
-			<div class="user-create-quizz screen4">
-				<div class="step">Seu quizz está pronto!</div>
+	<!--CRIAÇÃO QUIZZ PÁGINA 4-->
+	<main class="hidden">
+		<div class="user-create-quizz screen4">
+			<div class="step">Seu quizz está pronto!</div>
 
-					<div class="img-container">
-						<img src="https://guiadoestudante.abril.com.br/wp-content/uploads/sites/4/2010/11/Hogwarts.jpeg?quality=100&strip=info&resize=850,567" alt="hogwarts">	
-					</div>
+				<div class="img-container">
+					<img src="https://guiadoestudante.abril.com.br/wp-content/uploads/sites/4/2010/11/Hogwarts.jpeg?quality=100&strip=info&resize=850,567" alt="hogwarts">	
+				</div>
 
-				<div class="btn" onclick="validarStep1()">Finalizar Quizz</div>
-			</div>
-		</main>
-		<!--FIM QUIZZ PÁGINA 4-->
-
+			<div class="btn" onclick="validarStep1()">Finalizar Quizz</div>
+		</div>
+	</main>
+	<!--FIM QUIZZ PÁGINA 4-->
+	
+	<!-- PÁGINA FAZER QUIZZ -->
 	<main class="do-quizz-page hidden">
 		<div class="quizz-header">
 			<span>Testando quizz 123 aumentando as linhas para ver se passa da div?</span>
@@ -237,19 +240,20 @@
 			<div class="dark-filter"></div>
 		</div>
 
-		<div class="question">
-			<div class="question-header" style="background-color: purple">
-				<span>Testando quizz 123 aumentando as linhas para ver se passa da div, muito obrigado?</span>
-			</div>
-			<ul class="answers">
-				<li>
-					<img src="https://img.estadao.com.br/thumbs/640/resources/jpg/2/1/1649110304012.jpg"
-						alt="imagem teste" />
-					<div class="light-filter hidden"></div>
-					<span>Resposta 1</span>
-				</li>
-			</ul>
-		</div>
+		<ul class="questions">
+			<li class="question q1">
+				<div class="question-header" style="background-color: purple">
+					<span>${question.title}</span>
+				</div>
+				<ul class="answers">
+					<li class="">
+						<img src="https://img.estadao.com.br/thumbs/640/resources/jpg/2/1/1649110304012.jpg" alt="couldn't load image" />
+						<div class="light-filter hidden"></div>
+						<span>Resp 1</span>
+					</li>
+				</ul>
+			</li>
+		</ul>
 
 		<div class="results">
 			<div class="results-header" style="background-color: orangered">
@@ -269,6 +273,7 @@
 			</div>
 		</div>
 	</main>
+	<!-- FIM PÁGINA FAZER QUIZZ -->
 
 	<!--Scripts adicionados - ION ICONS, AXIOS, SCRIPT.JS-->
 	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
