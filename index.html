@@ -13,7 +13,7 @@
 		<!--HEADER FIXO COM Z-INDEX 10 margin-top: 69px;-->
 		<header><span>BuzzQuizz</span></header>
 
-		<main class="quizz-list-page">
+		<main class="quizz-list-page hidden">
 			<div class="users-quizz">
 				<div class="create-your-quizz">
 					<span>Você não criou nenhum quizz ainda :(</span>
@@ -35,7 +35,7 @@
 		</main>
 
 		<!--Acho que podemos fazer as páginas escondendo as "mains"-->
-		<main class="hidden">
+		<main class="">
 			<div class="user-create-quizz screen1">
 				<div class="step1">Comece pelo começo</div>
 				<div class="perguntas">
@@ -62,7 +62,7 @@
 						</li>
 					</ul>
 				</div>
-				<div class="btn">Prosseguir pra criar perguntas</div>
+				<div class="btn" onclick="validarStep1()">Prosseguir pra criar perguntas</div>
 			</div>
 		</main>
 		<!--Acho que podemos fazer as páginas escondendo as "mains"-->
