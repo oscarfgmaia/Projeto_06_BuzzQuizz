@@ -229,7 +229,7 @@ function validarStep2() {
 
 	function  verificarURL(node){
 		console.log("entrou no verificar")
-		const url = document.;
+		const url = document.getElementById(node);
 		if (url.value.includes('http') === true) {
 			console.log(url.value)
 			return true;
