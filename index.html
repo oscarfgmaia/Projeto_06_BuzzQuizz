@@ -51,7 +51,7 @@
 	</main>
 
 	<!--CRIAÇÃO QUIZZ PÁGINA 1-->
-	<main class="create-quizz hidden">
+	<main class="create-quizz">
 		<div class="user-create-quizz screen1">
 			<div class="step">Comece pelo começo</div>
 
@@ -83,12 +83,12 @@
 
 	<!--CRIAÇÃO QUIZZ PÁGINA 2-->
 
-	<main class="hidden">
+	<main class="">
 		<div class="user-create-quizz screen2">
 			<div class="step">Crie suas perguntas</div>
 
 			<div class="perguntas pagina2">
-				<span class="step title">Pergunta 1</span>
+				<span class="step title pergunta">Pergunta i</span>
 				<ul class="pergunta-ul">
 					<li>
 						<input type="text" name="pergunta-texo" id="pergunta-texto" placeholder="Texto da pergunta" />
@@ -98,42 +98,42 @@
 							placeholder="Cor de fundo da pergunta" />
 					</li>
 				</ul>
-				<span class="step title">Resposta correta</span>
+				<span class="step title resposta-correta">Resposta correta</span>
 				<ul class="pergunta-ul">
 					<li>
 						<input type="text" name="resposta-user" id="resposta-user" placeholder="Respsota correta" />
 					</li>
 					<li>
-						<input type="text" name="levels-quizz-user" id="levels-quizz-user"
+						<input type="text" name="url-resposta-quizz-user" id="url-resposta-quizz-user"
 							placeholder="URL da imagem" />
 					</li>
 				</ul>
-				<span class="step title">Respostas incorretas</span>
+				<span class="step title resposta-incorreta">Respostas incorretas</span>
 				<ul class="pergunta-ul">
 					<li>
-						<input type="text" name="wrong-answer-1" id="wrong-answer-1"
+						<input type="text" name="wrong-answer 1" id="wrong-answer-1"
 							placeholder="Resposta incorreta 1" />
 					</li>
 					<li>
-						<input type="text" name="wrong-answer-url-1" id="wrong-answer-url-1"
+						<input type="text" name="wrong-answer-url 1" id="wrong-answer-url-1"
 							placeholder="URL da imagem 1" />
 					</li>
 
 					<li>
-						<input type="text" name="wrong-answer-2" id="wrong-answer-2"
+						<input type="text" name="wrong-answer 2" id="wrong-answer-2"
 							placeholder="Resposta incorreta 2" />
 					</li>
 					<li>
-						<input type="text" name="wrong-answer-url-2" id="wrong-answer-url-2"
+						<input type="text" name="wrong-answer-url 2" id="wrong-answer-url-2"
 							placeholder="URL da imagem 2" />
 					</li>
 
 					<li>
-						<input type="text" name="wrong-answer-3" id="wrong-answer-3"
+						<input type="text" name="wrong-answer 3" id="wrong-answer-3"
 							placeholder="Resposta incorreta 3" />
 					</li>
 					<li>
-						<input type="text" name="wrong-answer-url-3" id="wrong-answer-url-3"
+						<input type="text" name="wrong-answer-url 3" id="wrong-answer-url 3"
 							placeholder="URL da imagem 3" />
 					</li>
 				</ul>
@@ -141,7 +141,7 @@
 			</div>
 
 			<div class="container-x">
-				<span class="step title">Pergunta 2</span>
+				<span class="step title">Pergunta X</span>
 				<span title="Editar">
 					<svg width="26" height="24" viewBox="0 0 26 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path
@@ -152,7 +152,7 @@
 			</div>
 
 			<div class="container-x">
-				<span class="step title">Pergunta 3</span>
+				<span class="step title">Pergunta X</span>
 				<span title="Editar">
 					<svg width="26" height="24" viewBox="0 0 26 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path
@@ -161,13 +161,13 @@
 					</svg>
 				</span>
 			</div>
-			<div class="btn" onclick="validarStep1()">Prosseguir pra criar níveis</div>
+			<div class="btn" onclick="validarStep2()">Prosseguir pra criar níveis</div>
 		</div>
 	</main>
 	<!--FIM QUIZZ PÁGINA 2-->
 
 	<!--CRIAÇÃO QUIZZ PÁGINA 3-->
-	<main class="hidden">
+	<main class="">
 		<div class="user-create-quizz screen3">
 			<div class="step">Agora, decida os níveis!</div>
 
