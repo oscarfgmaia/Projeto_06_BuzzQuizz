@@ -3,6 +3,9 @@ const quizzList = document.querySelector('.all-quizz ul');
 const quizzListPage = document.querySelector('.quizz-list-page');
 const createQuizzPage = document.querySelector('.create-quizz');
 const doQuizzPage = document.querySelector('.do-quizz-page');
+let qIndex = 0;
+let rightAnswers = 0;
+let selectedAnswers = 0;
 getQuizzList();
 
 // Randomizador
@@ -10,13 +13,7 @@ function comparador() {
 	return Math.random() - 0.5;
 }
 
-// test to get request - working
-/* const promise = axios.get(`${urlAPI}`)
-promise.then(load)
-function load(promise){
-    console.log(promise.data)
-} */
-//
+// Ir para a página de criar quizz
 function goScreen1() {
 	quizzListPage.classList.add('hidden');
 	createQuizzPage.classList.remove('hidden');
@@ -78,7 +75,7 @@ function fillQuestions(levels, questions) {
 	const questionList = document.querySelector('.questions');
 	questionList.innerHTML = '';
 
-	let qIndex = 0;
+	qIndex = 0;
 	questions.forEach((question) => {
 		questionList.innerHTML += `
 			<li class="question q${qIndex}">
@@ -102,7 +99,7 @@ function fillQuestions(levels, questions) {
 
 		ramdomAnswers.forEach((answer) => {
 			answersList.innerHTML += `
-			<li class="${answer.isCorrectAnswer}Answer" onclick="selectAnswer()">
+			<li class="${answer.isCorrectAnswer}Answer" onclick="selectAnswer(this)">
 				<img src="${answer.image}" alt="${answer.text}" />
 				<div class="light-filter hidden"></div>
 				<span>${answer.text}</span>
@@ -115,9 +112,59 @@ function fillQuestions(levels, questions) {
 }
 
 // Seleção de respostas
-function selectAnswer() {
-	const selectTheAnswer = document.querySelector('.answers');
-	console.log(selectTheAnswer);
+function selectAnswer(selectedData) {
+	const answers = selectedData.parentNode.getElementsByTagName('li');
+	console.log(selectedData.classList);
+
+	for (let i = 0; i < answers.length; i++) {
+		if (answers[i].classList.contains('selected')) {
+			console.log(`já tem resposta selecionada em ${selectedData.parentNode.parentNode.classList}`);
+			`1.If \n Selected Answers: ${selectedAnswers} \n Right Answers: ${rightAnswers}`;
+			break;
+		} else {
+			selectedData.classList.add('selected');
+			selectedAnswers++;
+			for (let i1 = 0; i1 < answers.length; i1++) {
+				console.log(
+					`2.If \n Selected Answers: ${selectedAnswers} \n Right Answers: ${rightAnswers}`
+				);
+				if (selectedData.classList.contains('trueAnswer')) {
+					rightAnswers++;
+					console.log(
+						`3.If \n Selected Answers: ${selectedAnswers} \n Right Answers: ${rightAnswers}`
+					);
+					break;
+				}
+			}
+			break;
+		}
+	}
+
+	// mudar cor da resposta
+	for (let i2 = 0; i2 < answers.length; i2++) {
+		if (answers[i2].classList.contains('falseAnswer')) {
+			answers[i2].classList.add('wrong');
+		} else if (answers[i2].classList.contains('trueAnswer')) {
+			answers[i2].classList.add('right');
+		}
+
+		if (!answers[i2].classList.contains('selected')) {
+			answers[i2].querySelector('.light-filter').classList.remove('hidden');
+		}
+	}
+}
+
+// Recomeçar o quizz
+
+function restartThisQuizz() {
+	console.log('restart');
+}
+
+// Voltar para HomePage
+
+function returnHome() {
+	quizzListPage.classList.remove('hidden');
+	doQuizzPage.classList.add('hidden');
 }
 
 // validação criação quizz step1

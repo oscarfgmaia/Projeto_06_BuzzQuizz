@@ -30,7 +30,9 @@ ion-icon {
 	pointer-events: none;
 }
 
-.ionIcon:hover {
+.ionIcon:hover,
+.home:hover,
+.restart-quizz:hover {
 	cursor: pointer;
 }
 
@@ -476,6 +478,7 @@ textarea::placeholder {
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 15px;
+	position: relative;
 }
 
 .answers li img {
@@ -525,6 +528,38 @@ textarea::placeholder {
 	max-width: 500px;
 	object-fit: cover;
 	margin-bottom: 10px;
+}
+
+.restart-quizz,
+.home {
+	width: 220px;
+	height: 44px;
+	border-radius: 15px;
+
+	font-size: 18px;
+	font-weight: 400;
+	line-height: 21px;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.restart-quizz:active,
+.home:active {
+	filter: brightness(120%);
+}
+
+.restart-quizz {
+	background-color: #ec362d;
+	color: #fff5f4;
+	margin-top: 35px;
+	margin-bottom: 10px;
+}
+
+.home {
+	color: #818181;
+	margin-bottom: 20px;
 }
 
 .hidden {
