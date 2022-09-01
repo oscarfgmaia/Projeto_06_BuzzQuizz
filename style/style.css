@@ -26,8 +26,15 @@ header span {
 	color: white;
 }
 
-.hidden {
-	display: none;
+ion-icon {
+	pointer-events: none;
+}
+
+.ionIcon:hover {
+	cursor: pointer;
+}
+
+.ionIcon {
 }
 
 /* ATENTAR QUE A MAIN ESTÁ CONFIGURADA PARA CENTRALIZAR AS DIVS INTERNAS */
@@ -91,6 +98,12 @@ main {
 	color: #ec362d;
 }
 
+.create-your-quizz div:hover,
+header span:hover,
+.single-quizz:hover {
+	cursor: pointer;
+}
+
 .users-quizz,
 .all-quizz {
 	width: 90vw;
@@ -102,6 +115,21 @@ main {
 	font-size: 20px;
 	font-weight: 700;
 	line-height: 24px;
+}
+
+.users-quizz {
+	margin-top: 38px;
+}
+
+.user-quizz-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.user-quizz-header ion-icon {
+	color: #ec362d;
+	font-size: 31px;
 }
 
 .all-quizz span {
@@ -258,7 +286,6 @@ main {
 /* ---do a quizz page--- */
 
 .do-quizz-page {
-	background-color: red;
 	box-sizing: border-box;
 	width: 100vw;
 	height: fit-content;
@@ -267,7 +294,6 @@ main {
 }
 
 .quizz-header {
-	background-color: green;
 	width: 100%;
 	height: 20vw;
 	min-height: 142px;
@@ -340,24 +366,6 @@ main {
 	justify-content: center;
 }
 
-/* pensei em criar uma classe pra cada fundo depois criar um array com cada nome
-(não pensei em nada melhor ainda :/) */
-.purple {
-	background-color: purple;
-}
-
-.orange {
-	background-color: orangered;
-}
-
-.green {
-	background-color: greenyellow;
-}
-
-.blue {
-	background-color: lightskyblue;
-}
-
 .question-header span,
 .results-header p {
 	color: #ffffff;
@@ -382,7 +390,6 @@ main {
 }
 
 .answers li {
-	background-color: green;
 	width: 40vw;
 	min-width: 163px;
 	max-width: 330px;
@@ -438,4 +445,8 @@ main {
 	width: 100%;
 	max-width: 500px;
 	margin-bottom: 10px;
+}
+
+.hidden {
+	display: none;
 }
