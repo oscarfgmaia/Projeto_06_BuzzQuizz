@@ -5,6 +5,11 @@ const createQuizzPage = document.querySelector('.create-quizz');
 const doQuizzPage = document.querySelector('.do-quizz-page');
 getQuizzList();
 
+// Randomizador
+function comparador() {
+	return Math.random() - 0.5;
+}
+
 // test to get request - working
 /* const promise = axios.get(`${urlAPI}`)
 promise.then(load)
@@ -28,13 +33,12 @@ function getQuizzList() {
 
 function fillQuizList(promise) {
 	const array = promise.data;
-	console.log(array);
 	quizzList.innerHTML = '';
 
 	array.forEach((i) => {
 		quizzList.innerHTML += `
 		<li class="single-quizz" onclick="getQuizzInfo(this)" id="${i.id}" title="${i.title}">
-		    <img src=${i.image} />
+		    <img src=${i.image} alt="${i.title}"/>
 		    <div class="gradient-filter"></div>
 		    <span>${i.title}</span>
 		</li>
@@ -43,7 +47,7 @@ function fillQuizList(promise) {
 }
 
 function getQuizzError(error) {
-	console.log(error.response);
+	alert(`Erro ${error.response.status}: ${error.response.data}`);
 }
 
 // ir para página do quizz
@@ -55,7 +59,6 @@ function getQuizzInfo(data) {
 }
 
 function goToQuizz(promise) {
-	console.log(promise.data);
 	const levels = promise.data.levels;
 	const questions = promise.data.questions;
 
@@ -70,18 +73,52 @@ function goToQuizz(promise) {
 	fillQuestions(levels, questions);
 }
 
+// Popular página do quizz
 function fillQuestions(levels, questions) {
-	console.log(levels);
-	console.log(questions);
+	const questionList = document.querySelector('.questions');
+	questionList.innerHTML = '';
 
-	questions.forEach((i) => {
-		console.log(i);
+	let qIndex = 0;
+	questions.forEach((question) => {
+		questionList.innerHTML += `
+			<li class="question q${qIndex}">
+				<div class="question-header" style="background-color: ${question.color}">
+					<span>${question.title}</span>
+				</div>
+				<ul class="answers">
+					<li class="">
+						<img src="" alt="couldn't load image" />
+						<div class="light-filter hidden"></div>
+						<span>Resp 1</span>
+					</li>
+				</ul>
+			</li>
+			`;
+
+		const answersList = document.querySelector(`.q${qIndex} .answers`);
+		answersList.innerHTML = '';
+		const arrayAnswers = question.answers;
+		const ramdomAnswers = arrayAnswers.sort(comparador);
+
+		ramdomAnswers.forEach((answer) => {
+			answersList.innerHTML += `
+			<li class="${answer.isCorrectAnswer}Answer" onclick="selectAnswer()">
+				<img src="${answer.image}" alt="${answer.text}" />
+				<div class="light-filter hidden"></div>
+				<span>${answer.text}</span>
+			</li>
+			`;
+		});
+
+		qIndex++;
 	});
 }
 
-
-
-
+// Seleção de respostas
+function selectAnswer() {
+	const selectTheAnswer = document.querySelector('.answers');
+	console.log(selectTheAnswer);
+}
 
 // validação criação quizz step1
 

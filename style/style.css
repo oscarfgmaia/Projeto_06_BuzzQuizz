@@ -326,15 +326,15 @@ textarea::placeholder {
 	margin: 0px;
 }
 
-.img-container{
+.img-container {
 	width: 500px;
 	height: 256px;
 }
-.img-container img{
+.img-container img {
 	width: 100%;
 	height: 100%;
 }
-.screen4 .step{
+.screen4 .step {
 	margin-top: 70px;
 	margin-bottom: 45px;
 	height: 100%;
@@ -359,7 +359,7 @@ textarea::placeholder {
 
 	color: white;
 }
-.screen4 .btn{
+.screen4 .btn {
 	margin-top: 45px;
 	margin-bottom: 9px;
 }
@@ -415,8 +415,6 @@ textarea::placeholder {
 	z-index: 1;
 	background: linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
 }
-
-
 
 .question,
 .results {
@@ -478,13 +476,12 @@ textarea::placeholder {
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 15px;
-
-	position: relative;
 }
 
 .answers li img {
 	width: 100%;
-	object-fit: contain;
+	aspect-ratio: 3/2;
+	object-fit: cover;
 	margin-bottom: 7px;
 }
 
@@ -526,6 +523,7 @@ textarea::placeholder {
 .results-description img {
 	width: 100%;
 	max-width: 500px;
+	object-fit: cover;
 	margin-bottom: 10px;
 }
 
