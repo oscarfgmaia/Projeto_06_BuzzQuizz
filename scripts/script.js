@@ -196,10 +196,8 @@ function validarStep1() {
 		input = +input.value;
 		input = Math.round(input);
 		if (input >= 3 && input != NaN) {
-			console.log(input);
 			return true;
 		} else {
-			console.log(input);
 			return false;
 		}
 	};
@@ -210,19 +208,195 @@ function validarStep1() {
 		input = +input.value;
 		input = Math.round(input);
 		if (input >= 2 && input != NaN) {
-			console.log(input);
 			return true;
 		} else {
-			console.log(input);
 			return false;
 		}
 	};
 
 	if (title() === true && url() === true && questions() === true && levels() === true) {
 		alert('IR PARA PRÓXIMA PÁGINA');
+		console.log(quizzUserTitle.value);
+		console.log(quizzUserUrl.value);
+		console.log(quizzUserHowManyQuestions.value);
+		console.log(quizzUserHowManyLevels.value);
 		return true;
 	} else {
 		alert('Por favor, preencha os dados corretamente.');
 		return false;
 	}
 }
+
+//falta finalizar a verificação das respostas incorretas
+function validarStep2() {
+	let textoPergunta = () => {
+		const input = document.getElementById('pergunta-texto');
+		if (input.value.length >= 20) {
+			console.log(input.value);
+			return true;
+		} else {
+			console.log(input.value);
+			return false;
+		}
+	};
+
+	let corPergunta = () => {
+		const input = document.getElementById('pergunta-background');
+		if (input.value[0] === '#' && input.value.length === 7) {
+			console.log(input.value);
+			return true;
+		}
+		console.log(input.value);
+		return false;
+	};
+
+	let respostaCorreta = () => {
+		const input = document.getElementById('resposta-user');
+		if (input.value != '') {
+			console.log(input.value);
+			return true;
+		}
+		console.log(input.value);
+		return false;
+	};
+
+	let url = () => {
+		const url = document.getElementById('url-resposta-quizz-user');
+		const urlQuizz = document.createElement('a');
+		urlQuizz.href = url.value;
+		if (urlQuizz.href.includes('http')) {
+			console.log(url.value);
+			return true;
+		} else {
+			console.log(url.value);
+			return false;
+		}
+	};
+
+	function verificarURL(node) {
+		console.log('entrou no verificar');
+		const url = document.getElementById(node);
+		if (url.value.includes('http') === true) {
+			console.log(url.value);
+			return true;
+		} else {
+			console.log(url.value);
+			return false;
+		}
+	}
+
+	let respostasIncorretas = () => {
+		const wrong1 = document.getElementById('wrong-answer-1');
+		const wrong2 = document.getElementById('wrong-answer-2');
+		const wrong3 = document.getElementById('wrong-answer-3');
+		const wrongAnswers = [wrong1, wrong2, wrong3];
+		wrongAnswers.filter();
+		if (wrong1.value != '') {
+			verificarURL('wrong-answer-url-1');
+		}
+		if (wrong2.value != '') {
+			verificarURL('wrong-answer-url-2');
+		}
+
+		if (wrong3.value != '') {
+			verificarURL('wrong-answer-url-3');
+		}
+	};
+	respostasIncorretas();
+}
+//falta verificar se as letras inseridas foram de A-F em hex para validar
+let corPergunta = () => {
+	const input = document.getElementById('pergunta-background');
+	if (input.value[0] === '#' && input.value.length === 7) {
+		console.log(input.value);
+		return true;
+	}
+	console.log(input.value);
+	return false;
+};
+
+/*página 1 data*/
+let quizzUserTitle = document.getElementById('title-quizz-user');
+let quizzUserUrl = document.getElementById('url-quizz-user');
+let quizzUserHowManyQuestions = document.getElementById('questions-quizz-user');
+let quizzUserHowManyLevels = document.getElementById('levels-quizz-user');
+
+/*págiona 2 data*/
+let criarQuizz = {
+	title: quizzUserTitle.value,
+	image: quizzUserUrl.value,
+	questions: [
+		{
+			title: 'Título da pergunta 1',
+			color: '#123456',
+			answers: [
+				{
+					text: 'Texto da resposta 1',
+					image: 'https://http.cat/411.jpg',
+					isCorrectAnswer: true,
+				},
+				{
+					text: 'Texto da resposta 2',
+					image: 'https://http.cat/412.jpg',
+					isCorrectAnswer: false,
+				},
+				{
+					text: 'Texto da resposta 3',
+					image: 'https://http.cat/412.jpg',
+					isCorrectAnswer: false,
+				},
+				{
+					text: 'Texto da resposta 4',
+					image: 'https://http.cat/412.jpg',
+					isCorrectAnswer: false,
+				},
+			],
+		},
+		{
+			title: 'Título da pergunta 2',
+			color: '#123456',
+			answers: [
+				{
+					text: 'Texto da resposta 1',
+					image: 'https://http.cat/411.jpg',
+					isCorrectAnswer: true,
+				},
+				{
+					text: 'Texto da resposta 2',
+					image: 'https://http.cat/412.jpg',
+					isCorrectAnswer: false,
+				},
+			],
+		},
+		{
+			title: 'Título da pergunta 3',
+			color: '#123456',
+			answers: [
+				{
+					text: 'Texto da resposta 1',
+					image: 'https://http.cat/411.jpg',
+					isCorrectAnswer: true,
+				},
+				{
+					text: 'Texto da resposta 2',
+					image: 'https://http.cat/412.jpg',
+					isCorrectAnswer: false,
+				},
+			],
+		},
+	],
+	levels: [
+		{
+			title: 'Título do nível 1',
+			image: 'https://http.cat/411.jpg',
+			text: 'Descrição do nível 1',
+			minValue: 0,
+		},
+		{
+			title: 'Título do nível 2',
+			image: 'https://http.cat/412.jpg',
+			text: 'Descrição do nível 2',
+			minValue: 50,
+		},
+	],
+};
