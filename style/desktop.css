@@ -1,10 +1,61 @@
 @media (min-width: 1100px) {
 	.all-quizz,
-	.users-quizz {
+	.users-quizz,
+	.create-your-quizz {
 		width: 1070px;
 	}
 
 	.screen1 {
-		width: 1100px;
+		width: 600px;
+	}
+
+	.question,
+	.results {
+		margin-top: 42px;
+	}
+
+	.quizz-header {
+		width: 100%;
+		max-height: 227px;
+	}
+
+	.quizz-header span {
+		font-size: 39px;
+		line-height: 46px;
+	}
+
+	.question-header,
+	.results-header {
+		margin-bottom: 20px;
+	}
+
+	.question-header span,
+	.results-header p {
+		font-size: 23px;
+		line-height: 27px;
+		margin: 30px;
+	}
+
+	.percentage {
+		font-size: 23px;
+		line-height: 27px;
+	}
+
+	.answers {
+		font-size: 20px;
+		line-height: 24px;
+	}
+
+	.results-description {
+		flex-direction: row;
+		align-items: flex-start;
+		font-size: 19px;
+		line-height: 25px;
+	}
+
+	.results-description img {
+		max-width: 370px;
+		margin-bottom: 0;
+		margin-right: 21px;
 	}
 }

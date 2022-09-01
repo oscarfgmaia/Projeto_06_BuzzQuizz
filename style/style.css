@@ -39,17 +39,16 @@ main {
 	align-items: center;
 }
 
-/* main page */
+/* ---main page--- */
 .quizz-list-page {
-	box-sizing: border-box;
 	width: 100vw;
 	height: fit-content;
 	margin-top: 69px;
 	padding-bottom: 10px;
 }
 
-.users-quizz {
-	width: 70vw;
+.create-your-quizz {
+	width: 90vw;
 	height: 181px;
 	margin: 7vh auto;
 	border: 1px dashed #d5d5d5;
@@ -76,12 +75,11 @@ main {
 }
 
 .create-your-quizz div {
-	background-color: transparent;
 	width: 136px;
 	height: 40px;
 	border: 1px dashed #ec362d;
 	border-radius: 50px;
-	margin: 0 auto 33px auto;
+	margin: 0 auto 33px;
 
 	display: flex;
 	align-items: center;
@@ -93,8 +91,9 @@ main {
 	color: #ec362d;
 }
 
+.users-quizz,
 .all-quizz {
-	width: 70vw;
+	width: 90vw;
 
 	display: flex;
 	flex-direction: column;
@@ -103,6 +102,10 @@ main {
 	font-size: 20px;
 	font-weight: 700;
 	line-height: 24px;
+}
+
+.all-quizz span {
+	margin-top: 35px;
 }
 
 .quizzes {
@@ -158,7 +161,7 @@ main {
 	z-index: 2;
 }
 
-/* create you quizz page*/
+/* ---create your quizz page--- */
 .user-create-quizz {
 	display: flex;
 	flex-direction: column;
@@ -250,4 +253,189 @@ main {
 	text-align: center;
 
 	color: white;
+}
+
+/* ---do a quizz page--- */
+
+.do-quizz-page {
+	background-color: red;
+	box-sizing: border-box;
+	width: 100vw;
+	height: fit-content;
+	margin-top: 69px;
+	padding-bottom: 10px;
+}
+
+.quizz-header {
+	background-color: green;
+	width: 100%;
+	height: 20vw;
+	min-height: 142px;
+	position: relative;
+	text-align: center;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.quizz-header span {
+	color: #ffffff;
+	font-size: 19px;
+	font-weight: 400;
+	line-height: 23px;
+
+	display: block;
+	margin: 0 auto;
+	z-index: 2;
+}
+
+.quizz-header img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center top;
+
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 0;
+}
+
+.dark-filter {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	z-index: 1;
+	background: linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
+}
+
+.question,
+.results {
+	background-color: #ffffff;
+	width: calc(100vw - 36px);
+	max-width: 760px;
+	height: fit-content;
+	margin-top: 21px;
+
+	padding: 18px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+.question-header,
+.results-header {
+	width: 100%;
+	height: 10vw;
+	min-height: 89px;
+	max-height: 140px;
+	text-align: center;
+	margin-bottom: 12px;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* pensei em criar uma classe pra cada fundo depois criar um array com cada nome
+(não pensei em nada melhor ainda :/) */
+.purple {
+	background-color: purple;
+}
+
+.orange {
+	background-color: orangered;
+}
+
+.green {
+	background-color: greenyellow;
+}
+
+.blue {
+	background-color: lightskyblue;
+}
+
+.question-header span,
+.results-header p {
+	color: #ffffff;
+	font-size: 19px;
+	font-weight: 700;
+	line-height: 23px;
+
+	display: block;
+	margin: 17px;
+}
+
+.answers {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	width: 100%;
+
+	color: #000000;
+	font-size: 13px;
+	font-weight: 700;
+	line-height: 15px;
+}
+
+.answers li {
+	background-color: green;
+	width: 40vw;
+	min-width: 163px;
+	max-width: 330px;
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 15px;
+
+	position: relative;
+}
+
+.answers li img {
+	width: 100%;
+	object-fit: contain;
+	margin-bottom: 7px;
+}
+
+.light-filter {
+	background-color: rgba(255, 255, 255, 0.7);
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	z-index: 1;
+}
+
+.right {
+	color: #009c22;
+}
+
+.wrong {
+	color: #ff0b0b;
+}
+
+.percentage {
+	font-size: 19px;
+	font-weight: 700;
+	line-height: 23px;
+	margin: 0;
+}
+
+.results-description {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: left;
+
+	color: #484848;
+	font-size: 17px;
+	font-weight: 700;
+	line-height: 20px;
+}
+
+.results-description img {
+	width: 100%;
+	max-width: 500px;
+	margin-bottom: 10px;
 }
