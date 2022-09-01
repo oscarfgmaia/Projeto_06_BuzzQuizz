@@ -15,40 +15,43 @@
 	<!--HEADER FIXO COM Z-INDEX 10 margin-top: 69px;-->
 	<header><span>BuzzQuizz</span></header>
 
-	<main class="quizz-list-page hidden">
-		<div class="create-your-quizz">
-			<span>Você não criou nenhum quizz ainda :(</span>
-			<div>Criar Quiz</div>
-		</div>
-		<!-- não estou conseguindo aplicar o hidden -->
-		<!-- <div class="users-quizz">
+		<main class="quizz-list-page">
+			<div class="create-your-quizz hidden">
+				<span>Você não criou nenhum quizz ainda :(</span>
+				<div onclick="goScreen1()">Criar Quiz</div>
+			</div>
+
+			<div class="users-quizz">
 				<div class="user-quizz-header">
 					<span>Seus Quizzes</span>
+					<span class="ionIcon" onclick="goScreen1()" title="Create Quizz">
+						<ion-icon name="add-circle"></ion-icon>
+					</span>
 				</div>
+
 				<ul class="quizzes user">
 					<li class="single-quizz">
-						<img class="" src="https://img.estadao.com.br/thumbs/640/resources/jpg/2/1/1649110304012.jpg" />
+						<img src="https://img.estadao.com.br/thumbs/640/resources/jpg/2/1/1649110304012.jpg" />
 						<div class="gradient-filter"></div>
 						<span>Testando quizz 123 aumentando as linhas para ver se passa da div</span>
 					</li>
 				</ul>
-			</div> -->
+			</div>
 
-		<div class="all-quizz hidden">
-			<span>Todos os Quizzes</span>
-			<ul class="quizzes">
-				<!-- !!MiniProblema: quando não completa os 3 quizzes na linha fica um meio em branco!! -->
-				<li class="single-quizz">
-					<img class="" src="https://img.estadao.com.br/thumbs/640/resources/jpg/2/1/1649110304012.jpg" />
-					<div class="gradient-filter"></div>
-					<span>Testando quizz 123 aumentando as linhas para ver se passa da div</span>
-				</li>
-			</ul>
-		</div>
-	</main>
+			<div class="all-quizz">
+				<span>Todos os Quizzes</span>
+				<ul class="quizzes">
+					<li class="single-quizz">
+						<img src="https://img.estadao.com.br/thumbs/640/resources/jpg/2/1/1649110304012.jpg" />
+						<div class="gradient-filter"></div>
+						<span>Testando quizz 123 aumentando as linhas para ver se passa da div</span>
+					</li>
+				</ul>
+			</div>
+		</main>
 
 	<!--CRIAÇÃO QUIZZ PÁGINA 1-->
-	<main class="hidden">
+	<main class="create-quizz hidden">
 		<div class="user-create-quizz screen1">
 			<div class="step">Comece pelo começo</div>
 
@@ -219,38 +222,35 @@
 			<div class="dark-filter"></div>
 		</div>
 
-		<div class="question">
-			<div class="question-header purple">
-				<span>Testando quizz 123 aumentando as linhas para ver se passa da div, muito obrigado?</span>
+			<div class="question">
+				<div class="question-header" style="background-color: purple">
+					<span>Testando quizz 123 aumentando as linhas para ver se passa da div, muito obrigado?</span>
+				</div>
+				<ul class="answers">
+					<li>
+						<img src="https://img.estadao.com.br/thumbs/640/resources/jpg/2/1/1649110304012.jpg" alt="imagem teste" />
+						<div class="light-filter hidden"></div>
+						<span>Resposta 1</span>
+					</li>
+				</ul>
 			</div>
-			<ul class="answers">
-				<li>
-					<img src="https://img.estadao.com.br/thumbs/640/resources/jpg/2/1/1649110304012.jpg"
-						alt="imagem teste" />
-					<span>Resposta 1</span>
-					<div class="light-filter hidden"></div>
-				</li>
-			</ul>
-		</div>
 
-		<div class="results">
-			<div class="results-header orange">
-				<p>
-					Testando quizz <span class="percentage">88%</span> aumentando as linhas para ver se passa da div,
-					muito
-					obrigado?
-				</p>
-			</div>
-			<div class="results-description">
-				<img src="https://img.estadao.com.br/thumbs/640/resources/jpg/2/1/1649110304012.jpg"
-					alt="imagem teste" />
-				<div>
-					Testando quizz 123 aumentando as linhas para ver se passa da div, muito obrigado? Testando quizz 123
-					aumentando as linhas para ver se passa da div, muito obrigado?
+			<div class="results">
+				<div class="results-header" style="background-color: orangered">
+					<p>
+						Testando quizz <span class="percentage">88%</span> aumentando as linhas para ver se passa da div, muito
+						obrigado?
+					</p>
+				</div>
+				<div class="results-description">
+					<img src="https://img.estadao.com.br/thumbs/640/resources/jpg/2/1/1649110304012.jpg" alt="imagem teste" />
+					<div>
+						Testando quizz 123 aumentando as linhas para ver se passa da div, muito obrigado? Testando quizz 123
+						aumentando as linhas para ver se passa da div, muito obrigado?
+					</div>
 				</div>
 			</div>
-		</div>
-	</main>
+		</main>
 
 	<!--Scripts adicionados - ION ICONS, AXIOS, SCRIPT.JS-->
 	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
