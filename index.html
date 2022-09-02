@@ -53,7 +53,7 @@
 	<!-- FIM PÁGINA INICIAL -->
 
 	<!--CRIAÇÃO QUIZZ PÁGINA 1-->
-	<main class="create-quizz">
+	<main class="create-quizz hidden">
 		<div class="user-create-quizz screen1">
 			<div class="step">Comece pelo começo</div>
 
@@ -85,7 +85,7 @@
 
 	<!--CRIAÇÃO QUIZZ PÁGINA 2-->
 
-	<main class="">
+	<main class="hidden">
 		<div class="user-create-quizz screen2">
 			<div class="step">Crie suas perguntas</div>
 
@@ -160,7 +160,7 @@
 	<!--FIM QUIZZ PÁGINA 2-->
 
 	<!--CRIAÇÃO QUIZZ PÁGINA 3-->
-	<main class="">
+	<main class="hidden">
 		<div class="user-create-quizz screen3">
 			<div class="step">Agora, decida os níveis!</div>
 			<div class="perguntas pagina3">
@@ -245,23 +245,13 @@
 			</li>
 		</ul>
 
-		<div class="results">
-			<div class="results-header" style="background-color: orangered">
-				<p>
-					Testando quizz <span class="percentage">88%</span> aumentando as linhas para ver se passa da div,
-					muito
-					obrigado?
-				</p>
-			</div>
-			<div class="results-description">
-				<img src="https://img.estadao.com.br/thumbs/640/resources/jpg/2/1/1649110304012.jpg"
-					alt="imagem teste" />
-				<div>
-					Testando quizz 123 aumentando as linhas para ver se passa da div, muito obrigado? Testando quizz 123
-					aumentando as linhas para ver se passa da div, muito obrigado?
-				</div>
-			</div>
-		</div>
+		<div class="results-box hidden">
+			<div class="results"></div>
+
+			<div class="restart-quizz" onclick="restartThisQuizz()">Reiniciar Quizz</div>
+			<div class="home" onclick="returnHome()">Voltar para home</div>
+		<div class="results-box">
+
 	</main>
 	<!-- FIM PÁGINA FAZER QUIZZ -->
 
