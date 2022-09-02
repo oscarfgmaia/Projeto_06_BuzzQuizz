@@ -296,19 +296,40 @@ function validarStep2() {
 	let corPergunta = () => {
 		const input = document.getElementById('pergunta-background');
 		if (input.value[0] === '#' && input.value.length === 7) {
-			const hex = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'A', 'b', 'B', 'c', 'C', 'd', 'D', 'e', 'E', 'f', 'F']
+			const hex = [
+				'0',
+				'1',
+				'2',
+				'3',
+				'4',
+				'5',
+				'6',
+				'7',
+				'8',
+				'9',
+				'a',
+				'A',
+				'b',
+				'B',
+				'c',
+				'C',
+				'd',
+				'D',
+				'e',
+				'E',
+				'f',
+				'F',
+			];
 			for (let i = 1; i < input.value.length; i++) {
-				if (hex.includes(input.value[i]) === false) {;
-					return false
+				if (hex.includes(input.value[i]) === false) {
+					return false;
 				}
 			}
-			return true
-		}
-		else{;
+			return true;
+		} else {
 			return false;
-		};
-	
-	}
+		}
+	};
 
 	let respostaCorreta = () => {
 		const input = document.getElementById('resposta-user');
@@ -316,12 +337,12 @@ function validarStep2() {
 			console.log(input.value);
 			return true;
 		}
-		console.log(input.value)
-		return false
-	}
-	verificarRespostaIncorreta('wrong-answer-1')
- 	verificarRespostaIncorreta('wrong-answer-2')
-	verificarRespostaIncorreta('wrong-answer-3')
+		console.log(input.value);
+		return false;
+	};
+	verificarRespostaIncorreta('wrong-answer-1');
+	verificarRespostaIncorreta('wrong-answer-2');
+	verificarRespostaIncorreta('wrong-answer-3');
 
 	let url = () => {
 		const url = document.getElementById('url-resposta-quizz-user');
@@ -336,37 +357,34 @@ function validarStep2() {
 		}
 	};
 
-function verificarURL(valueURL) {
-	console.log(valueURL)
-	if (valueURL.includes('http') === true) {
-		console.log("true")
-		return true;
-	} else {
-		console.log("false")
-		return false;
+	function verificarURL(valueURL) {
+		console.log(valueURL);
+		if (valueURL.includes('http') === true) {
+			console.log('true');
+			return true;
+		} else {
+			console.log('false');
+			return false;
+		}
 	}
-};
 
-let verificarRespostaIncorreta = (id) => {
-	const wrong = document.querySelector('#'+id);
-	let li = wrong.parentNode
-	let wrongUrl = li.nextElementSibling.children[0];
-	if (wrong.value != '') {
-		verificarURL(wrongUrl.value)
-	}
-}
+	let verificarRespostaIncorreta = (id) => {
+		const wrong = document.querySelector('#' + id);
+		let li = wrong.parentNode;
+		let wrongUrl = li.nextElementSibling.children[0];
+		if (wrong.value != '') {
+			verificarURL(wrongUrl.value);
+		}
+	};
 
-
-function popularPerguntas(qtdPerguntas){
-	
-	for(let i=0; i<qtdPerguntas; i++){
+	function popularPerguntas(qtdPerguntas) {
+		for (let i = 0; i < qtdPerguntas; i++) {
 			const pagina = document.querySelector('.user-create-quizz.screen2');
-			const botao = document.querySelector('.screen2 .btn')
+			const botao = document.querySelector('.screen2 .btn');
 			const novaPergunta = document.createElement('div');
 			novaPergunta.classList.add('container-x');
-			novaPergunta.innerHTML = 
-			`
-				<span class="step title">Pergunta ${i+2}</span>
+			novaPergunta.innerHTML = `
+				<span class="step title">Pergunta ${i + 2}</span>
 				<span title="Editar">
 					<svg width="26" height="24" viewBox="0 0 26 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 						<path
@@ -375,16 +393,16 @@ function popularPerguntas(qtdPerguntas){
 					</svg>
 				</span>
 			</div>
-			`
-			pagina.insertBefore(novaPergunta,botao);
+			`;
+			pagina.insertBefore(novaPergunta, botao);
 		}
+	}
 }
-
 /*página 1 data*/
-let quizzUserTitle = document.getElementById('title-quizz-user')
-let quizzUserUrl = document.getElementById('url-quizz-user')
-let quizzUserHowManyQuestions = document.getElementById('questions-quizz-user')
-let quizzUserHowManyLevels = document.getElementById('levels-quizz-user')
+let quizzUserTitle = document.getElementById('title-quizz-user');
+let quizzUserUrl = document.getElementById('url-quizz-user');
+let quizzUserHowManyQuestions = document.getElementById('questions-quizz-user');
+let quizzUserHowManyLevels = document.getElementById('levels-quizz-user');
 /*
 
 /*págiona 2 data
