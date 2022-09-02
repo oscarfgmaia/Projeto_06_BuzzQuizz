@@ -196,11 +196,18 @@ function validarStep2() {
 	let corPergunta = () => {
 		const input = document.getElementById('pergunta-background');
 		if (input.value[0] === '#' && input.value.length === 7) {
-			console.log(input.value)
-			return true;
+			const hex = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'A', 'b', 'B', 'c', 'C', 'd', 'D', 'e', 'E', 'f', 'F']
+			for (let i = 1; i < input.value.length; i++) {
+				if (hex.includes(input.value[i]) === false) {
+					return false
+				}
+			}
+			return true
 		}
-		console.log(input.value)
-		return false;
+		else{
+			return false;
+		}
+	
 	}
 
 	let respostaCorreta = () => {
@@ -212,63 +219,54 @@ function validarStep2() {
 		console.log(input.value)
 		return false
 	}
+	verificarRespostaIncorreta('wrong-answer-1')
+ 	verificarRespostaIncorreta('wrong-answer-2')
+	verificarRespostaIncorreta('wrong-answer-3')
 
-	let url = () => {
-		const url = document.getElementById('url-resposta-quizz-user');
-		const urlQuizz = document.createElement('a');
-		urlQuizz.href = url.value;
-		if (urlQuizz.href.includes('http')) {
-			console.log(url.value)
-			return true;
-		} else {
-			console.log(url.value)
-			return false;
-		}
-	};
+};
 
-
-	function  verificarURL(node){
-		console.log("entrou no verificar")
-		const url = document.getElementById(node);
-		if (url.value.includes('http') === true) {
-			console.log(url.value)
-			return true;
-		} else {
-			console.log(url.value)
-			return false;
-		}
-	};
-
-	let respostasIncorretas = () => {
-		const wrong1 = document.getElementById('wrong-answer-1');
-		const wrong2 = document.getElementById('wrong-answer-2');
-		const wrong3 = document.getElementById('wrong-answer-3');
-		const wrongAnswers =[wrong1,wrong2,wrong3]
-		wrongAnswers.filter()
-		if(wrong1.value != ''){
-			verificarURL('wrong-answer-url-1')
-		}
-		if(wrong2.value != ''){
-			verificarURL('wrong-answer-url-2')
-		}
-
-		if(wrong3.value != ''){
-			verificarURL('wrong-answer-url-3')
-		}
-
-
-	}
-respostasIncorretas()
-}
-//falta verificar se as letras inseridas foram de A-F em hex para validar
-let corPergunta = () => {
-	const input = document.getElementById('pergunta-background');
-	if (input.value[0] === '#' && input.value.length === 7) {
-		console.log(input.value);
+function verificarURL(valueURL) {
+	console.log(valueURL)
+	if (valueURL.includes('http') === true) {
+		console.log("true")
 		return true;
+	} else {
+		console.log("false")
+		return false;
 	}
-	console.log(input.value);
-	return false;
+};
+
+let verificarRespostaIncorreta = (id) => {
+	const wrong = document.querySelector('#'+id);
+	let li = wrong.parentNode
+	let wrongUrl = li.nextElementSibling.children[0];
+	if (wrong.value != '') {
+		verificarURL(wrongUrl.value)
+	}
+}
+
+
+function popularPerguntas(qtdPerguntas){
+	
+	for(let i=0; i<qtdPerguntas; i++){
+			const pagina = document.querySelector('.user-create-quizz.screen2');
+			const botao = document.querySelector('.screen2 .btn')
+			const novaPergunta = document.createElement('div');
+			novaPergunta.classList.add('container-x');
+			novaPergunta.innerHTML = 
+			`
+				<span class="step title">Pergunta ${i+2}</span>
+				<span title="Editar">
+					<svg width="26" height="24" viewBox="0 0 26 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path
+							d="M18.1594 15.4969L19.6038 14.0594C19.8295 13.8348 20.2222 13.992 20.2222 14.3155V20.8471C20.2222 22.0375 19.2517 23.0034 18.0556 23.0034H2.16667C0.970486 23.0034 0 22.0375 0 20.8471V5.03462C0 3.84419 0.970486 2.87837 2.16667 2.87837H14.5122C14.8326 2.87837 14.9951 3.2647 14.7694 3.4938L13.325 4.9313C13.2573 4.99868 13.167 5.03462 13.0677 5.03462H2.16667V20.8471H18.0556V15.7485C18.0556 15.6542 18.0917 15.5643 18.1594 15.4969ZM25.2281 6.43169L13.3747 18.2282L9.2941 18.6774C8.11146 18.8077 7.10486 17.8149 7.23576 16.629L7.68715 12.568L19.5406 0.771533C20.5743 -0.257178 22.2444 -0.257178 23.2736 0.771533L25.2236 2.71216C26.2573 3.74087 26.2573 5.40747 25.2281 6.43169ZM20.7684 7.81978L18.1458 5.20981L9.75903 13.5608L9.42951 16.4942L12.3771 16.1663L20.7684 7.81978ZM23.6934 4.2395L21.7434 2.29888C21.5583 2.1147 21.2559 2.1147 21.0753 2.29888L19.6806 3.68696L22.3031 6.29692L23.6979 4.90884C23.8785 4.72017 23.8785 4.42368 23.6934 4.2395Z"
+							fill="black" />
+					</svg>
+				</span>
+			</div>
+			`
+			pagina.insertBefore(novaPergunta,botao);
+		}
 }
 
 /*página 1 data*/
@@ -276,8 +274,9 @@ let quizzUserTitle = document.getElementById('title-quizz-user')
 let quizzUserUrl = document.getElementById('url-quizz-user')
 let quizzUserHowManyQuestions = document.getElementById('questions-quizz-user')
 let quizzUserHowManyLevels = document.getElementById('levels-quizz-user')
+/*
 
-/*págiona 2 data*/
+/*págiona 2 data
 let criarQuizz = {
 	title: quizzUserTitle.value,
 	image: quizzUserUrl.value,
@@ -356,3 +355,5 @@ let criarQuizz = {
 		}
 	]
 }
+
+*/

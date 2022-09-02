@@ -36,6 +36,7 @@ ion-icon {
 
 /* ATENTAR QUE A MAIN ESTÁ CONFIGURADA PARA CENTRALIZAR AS DIVS INTERNAS */
 main {
+	width: 100vw;
 	margin-top: 69px;
 	display: flex;
 	flex-direction: column;
@@ -49,6 +50,7 @@ main {
 	height: fit-content;
 	margin-top: 69px;
 	padding-bottom: 10px;
+	
 }
 
 .create-your-quizz {
@@ -112,6 +114,7 @@ header span:hover,
 	font-size: 20px;
 	font-weight: 700;
 	line-height: 24px;
+	
 }
 
 .users-quizz {
@@ -137,6 +140,7 @@ header span:hover,
 	display: flex;
 	justify-content: space-between;
 	flex-wrap: wrap;
+	
 }
 
 .single-quizz {
