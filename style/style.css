@@ -43,6 +43,7 @@ main {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	width: 100vw;
 }
 
 /* ---main page--- */
@@ -459,6 +460,10 @@ textarea::placeholder {
 	margin: 17px;
 }
 
+.results-header {
+	background-color: #ec362d;
+}
+
 .answers {
 	display: flex;
 	flex-wrap: wrap;
@@ -504,11 +509,11 @@ textarea::placeholder {
 	color: #ff0b0b;
 }
 
-.percentage {
-	font-size: 19px;
-	font-weight: 700;
-	line-height: 23px;
-	margin: 0;
+.results-box {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 }
 
 .results-description {
@@ -516,6 +521,7 @@ textarea::placeholder {
 	flex-direction: column;
 	align-items: center;
 	text-align: left;
+	word-break: break-all;
 
 	color: #484848;
 	font-size: 17px;

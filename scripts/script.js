@@ -3,10 +3,23 @@ const quizzList = document.querySelector('.all-quizz ul');
 const quizzListPage = document.querySelector('.quizz-list-page');
 const createQuizzPage = document.querySelector('.create-quizz');
 const doQuizzPage = document.querySelector('.do-quizz-page');
+const resultsBox = document.querySelector('.results-box');
+let quizzUrl = {};
 let qIndex = 0;
 let rightAnswers = 0;
 let selectedAnswers = 0;
+let levels;
 getQuizzList();
+
+// reset variables
+function resetVariables() {
+	qIndex = 0;
+	rightAnswers = 0;
+	selectedAnswers = 0;
+	console.log(qIndex);
+	console.log(rightAnswers);
+	console.log(selectedAnswers);
+}
 
 // Randomizador
 function comparador() {
@@ -50,13 +63,14 @@ function getQuizzError(error) {
 // ir para página do quizz
 function getQuizzInfo(data) {
 	const quizzPage = axios.get(`${urlAPI}/${data.id}`);
+	quizzUrl = data;
 
 	quizzPage.then(goToQuizz);
 	quizzPage.catch(getQuizzError);
 }
 
 function goToQuizz(promise) {
-	const levels = promise.data.levels;
+	levels = promise.data.levels;
 	const questions = promise.data.questions;
 
 	const quizzTitle = document.querySelector('.quizz-header span');
@@ -67,11 +81,11 @@ function goToQuizz(promise) {
 	quizzListPage.classList.add('hidden');
 	doQuizzPage.classList.remove('hidden');
 
-	fillQuestions(levels, questions);
+	fillQuestions(questions);
 }
 
 // Popular página do quizz
-function fillQuestions(levels, questions) {
+function fillQuestions(questions) {
 	const questionList = document.querySelector('.questions');
 	questionList.innerHTML = '';
 
@@ -152,19 +166,58 @@ function selectAnswer(selectedData) {
 			answers[i2].querySelector('.light-filter').classList.remove('hidden');
 		}
 	}
+
+	console.log(qIndex);
+	console.log(rightAnswers);
+	console.log(selectedAnswers);
+
+	if (qIndex === selectedAnswers) {
+		resultsBox.classList.remove('hidden');
+		setTimeout(showResults, 1000);
+	}
+}
+
+function showResults() {
+	const resultsDiv = document.querySelector('.results');
+	resultsDiv.innerHTML = '';
+	let score = Math.round((rightAnswers / qIndex) * 100);
+
+	for (let i = 0; i < levels.length; i++) {
+		if (score < levels[i].minValue) {
+			resultsDiv.innerHTML = `
+			<div class="results-header">
+				<p> Você acertou ${score}%: ${levels[i].minValue}</p>
+			</div>
+			<div class="results-description">
+				<img src=${levels[i].image} alt="${levels[i].text}" />
+				<div>${levels[i].text}</div>
+			</div>
+			`;
+			break;
+		}
+	}
+	console.log(resultsBox.innerHTML);
 }
 
 // Recomeçar o quizz
 
 function restartThisQuizz() {
-	console.log('restart');
+	resetVariables();
+	getQuizzInfo(quizzUrl);
+	resultsBox.classList.add('hidden');
+	console.log(resultsBox.innerHTML);
 }
 
 // Voltar para HomePage
 
 function returnHome() {
-	quizzListPage.classList.remove('hidden');
+	resetVariables();
+	quizzUrl = {};
 	doQuizzPage.classList.add('hidden');
+	resultsBox.classList.add('hidden');
+	quizzListPage.classList.remove('hidden');
+
+	console.log(resultsBox.innerHTML);
 }
 
 // validação criação quizz step1
