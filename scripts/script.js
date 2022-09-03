@@ -321,11 +321,8 @@ function validarStep1() {
 		levels() === true
 	) {
 		alert('IR PARA PRÓXIMA PÁGINA');
-		console.log(quizzUserTitle.value);
-		console.log(quizzUserUrl.value);
-		console.log(quizzUserHowManyQuestions.value);
-		console.log(quizzUserHowManyLevels.value);
-
+		quizzCreated.title = quizzUserTitle.value;
+		quizzCreated.image = quizzUserUrl.value;
 		const screen1 = document.querySelector('.create-quizz');
 		const screen2 = screen1.nextElementSibling;
 		screen1.classList.add('hidden');
@@ -336,59 +333,11 @@ function validarStep1() {
 		alert('Por favor, preencha os dados corretamente.');
 		return false;
 	}
+	popularPerguntas(quizzUserHowManyQuestions);
 }
 
 //falta finalizar a verificação das respostas incorretas
 function validarStep2() {
-	let textoPergunta = () => {
-		const input = document.getElementById('pergunta-texto');
-		if (input.value.length >= 20) {
-			console.log(input.value);
-			return true;
-		} else {
-			console.log(input.value);
-			return false;
-		}
-	};
-
-	let corPergunta = () => {
-		const input = document.getElementById('pergunta-background');
-		if (input.value[0] === '#' && input.value.length === 7) {
-			const hex = [
-				'0',
-				'1',
-				'2',
-				'3',
-				'4',
-				'5',
-				'6',
-				'7',
-				'8',
-				'9',
-				'a',
-				'A',
-				'b',
-				'B',
-				'c',
-				'C',
-				'd',
-				'D',
-				'e',
-				'E',
-				'f',
-				'F',
-			];
-			for (let i = 1; i < input.value.length; i++) {
-				if (hex.includes(input.value[i]) === false) {
-					return false;
-				}
-			}
-			return true;
-		} else {
-			return false;
-		}
-	};
-
 	let respostaCorreta = () => {
 		const input = document.getElementById('resposta-user');
 		if (input.value != '') {
@@ -463,7 +412,7 @@ function getInfoPage2() {
 	let quizzUserIncorrectAnswer3 = document.getElementById('wrong-answer-3');
 	let quizzUserIncorrectAnswer3Url = document.getElementById('wrong-answer-url-3');
 
-	quizzCreated.questions = [
+	let possibilidadeRespostas = [
 		{
 			text: quizzUserCorrectAnswer.value,
 			image: quizzUserCorrectUrl.value,
@@ -486,9 +435,56 @@ function getInfoPage2() {
 		},
 	];
 
-	for (let i = 0; i < quizzCreated.questions.length; i++) {
-		console.log(quizzCreated.questions[i].text);
-	}
+	let questionObj = {
+		title: '',
+		color: '',
+		answers: [],
+	};
+
+	let titlePergunta = () => {
+		if (questionObj.title.length >= 20) {
+			return true;
+		} else {
+			return false;
+		}
+	};
+
+	let corPergunta = () => {
+		if (questionObj.color[0] === '#' && questionObj.color.length === 7) {
+			const hex = [
+				'0',
+				'1',
+				'2',
+				'3',
+				'4',
+				'5',
+				'6',
+				'7',
+				'8',
+				'9',
+				'a',
+				'A',
+				'b',
+				'B',
+				'c',
+				'C',
+				'd',
+				'D',
+				'e',
+				'E',
+				'f',
+				'F',
+			];
+			for (let i = 1; i < questionObj.color.length; i++) {
+				if (hex.includes(questionObj.color[i]) === false) {
+					return false;
+				}
+			}
+			return true;
+		} else {
+			return false;
+		}
+	};
 
 	function temConteudo(elemento) {
 		if (elemento.text != '') {
@@ -502,12 +498,119 @@ function getInfoPage2() {
 		}
 		return false;
 	}
-	const newArr = quizzCreated.questions.filter(temConteudo);
-	if (newArr[0] === undefined || newArr[1] === undefined) {
-		console.log('énecessário pelo menos 1 pergunta e uma resposta');
+
+	let setarInputsTitulosPerguntas = () => {
+		questionObj.title = quizzUserPerguntaText.value;
+		questionObj.color = quizzUserPerguntaColor.value;
+	};
+	setarInputsTitulosPerguntas();
+	if (titlePergunta() === true && corPergunta() === true) {
+		const respostasComConteudo = possibilidadeRespostas.filter(temConteudo);
+		console.log('respostasIncorretasComConteudo');
+		console.log(respostasComConteudo);
+		const respostasComUrlValida = respostasComConteudo.filter(urlValida);
+		console.log('respostaComUIRL');
+		console.log(respostasComUrlValida);
+		if (
+			respostasComUrlValida.length === respostasComConteudo.length &&
+			respostasComUrlValida.length != 0
+		) {
+			for (let i = 0; i < respostasComUrlValida.length; i++) {
+				if (i === 0) {
+					questionObj.answers.push(respostasComUrlValida[i]);
+				} else if (i === 1) {
+					questionObj.answers.push(respostasComUrlValida[i]);
+				} else if (i === 2) {
+					questionObj.answers.push(respostasComUrlValida[i]);
+				} else if (i === 3) {
+					questionObj.answers.push(respostasComUrlValida[i]);
+				} else {
+					console.log('tem coisa errada');
+				}
+			}
+			quizzCreated.questions.push(questionObj);
+		} else {
+			console.log('tem coisa errada - validação respostas');
+		}
+	} else {
+		console.log('tem coisa errada - validação titulo');
 	}
-	const newArrOK = newArr.filter(urlValida);
-	console.log(newArrOK);
-	//verificar no final se a quizzCreated.questions.length === quizzUserHowManyQuestions
-	//verificar no final se a quizzCreated.questions.length === quizzUserHowManyLevels
+}
+
+function getInfoPage3() {
+	console.log('get info 3');
+	let quizzUserLevelTitle = document.getElementById('nivel-title');
+	let quizzUserLevelPercentage = document.getElementById('percentage');
+	let quizzUserLevelUrl = document.getElementById('url-nivel');
+	let quizzUserLevelDescription = document.getElementById('description-nivel');
+
+	let lvlObj = {
+		title: '',
+		image: '',
+		text: '',
+		minValue: 0,
+	};
+
+	let setarInputs = () => {
+		lvlObj.title = quizzUserLevelTitle.value;
+		lvlObj.image = quizzUserLevelUrl.value;
+		lvlObj.text = quizzUserLevelDescription.value;
+		lvlObj.minValue = quizzUserLevelPercentage.value;
+	};
+
+	let titleLevel = () => {
+		if (quizzUserLevelTitle.value.length >= 10) {
+			console.log('title ok');
+			return true;
+		} else {
+			console.log('title failed');
+			return false;
+		}
+	};
+
+	let percentageLevel = () => {
+		if (quizzUserLevelPercentage.value != '') {
+			let teste = quizzUserLevelPercentage.value;
+			teste = +teste;
+			if (teste >= 0 && teste <= 100) {
+				lvlObj.minValue = teste;
+				return true;
+			} else {
+				console.log('% FAILED');
+				return false;
+			}
+		}
+		return false;
+	};
+
+	let descriptionLevel = () => {
+		if (quizzUserLevelDescription.value.length >= 30) {
+			console.log('DESCRIPTION ok');
+			return true;
+		} else {
+			console.log('descrpt failed');
+			return false;
+		}
+	};
+	function urlValida(element) {
+		if (verificarURL(element.image) === true) {
+			console.log('URL ok');
+			return true;
+		}
+		return false;
+	}
+
+	setarInputs();
+	if (
+		titleLevel() === true &&
+		percentageLevel() === true &&
+		urlValida(lvlObj) &&
+		descriptionLevel() === true
+	) {
+		console.log('ENTROU NO IF');
+		quizzCreated.levels.push(lvlObj);
+	} else {
+		console.log('Não entrou no IF');
+	}
+	console.log(quizzCreated);
 }
