@@ -32,7 +32,8 @@ ion-icon {
 
 .ionIcon:hover,
 .home:hover,
-.restart-quizz:hover {
+.restart-quizz:hover,
+.quizzes:hover {
 	cursor: pointer;
 }
 
@@ -44,7 +45,6 @@ main {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	width: 100vw;
 }
 
 /* ---main page--- */
@@ -138,7 +138,7 @@ header span:hover {
 
 .quizzes {
 	display: flex;
-	justify-content: space-between;
+	justify-content: left;
 	flex-wrap: wrap;
 }
 
@@ -149,6 +149,7 @@ header span:hover {
 	position: relative;
 	text-align: center;
 	margin: 15px 7px 0;
+	word-break: break-all;
 
 	display: flex;
 	flex-direction: column;
@@ -401,8 +402,8 @@ textarea::placeholder {
 	box-sizing: border-box;
 	width: 100vw;
 	height: fit-content;
-	margin-top: 69px;
 	padding-bottom: 10px;
+	margin-top: -10px;
 }
 
 .quizz-header {

@@ -13,7 +13,9 @@
 
 <body>
 	<!--HEADER FIXO COM Z-INDEX 10 margin-top: 69px;-->
-	<header><span>BuzzQuizz</span></header>
+	<header>
+		<span onclick="returnHome()" title="BuzzQuizz Home">BuzzQuizz</span>
+	</header>
 
 	<!-- PÁGINA INICIAL -->
 	<div class="show-home"></div>
@@ -37,8 +39,8 @@
 					<div class="gradient-filter"></div>
 					<span>Testando quizz 123 aumentando as linhas para ver se passa da div</span>
 					<div class="edit-quizz">
-						<span class="ionIcon"><ion-icon name="create-outline"></ion-icon></span>
-						<span class="ionIcon" onclick="deleteQuizz()"><ion-icon name="trash-outline"></ion-icon></span>
+						<span class="ionIcon" title="Edit Quizz"><ion-icon name="create-outline"></ion-icon></span>
+						<span class="ionIcon" onclick="deleteQuizz()" title="Delete Quizz"><ion-icon name="trash-outline"></ion-icon></span>
 					</div>
 				</li>
 			</ul>
@@ -52,7 +54,7 @@
 	<!-- FIM PÁGINA INICIAL -->
 
 	<!--CRIAÇÃO QUIZZ PÁGINA 1-->
-	<main class="create-quizz">
+	<main class="create-quizz hidden">
 		<div class="user-create-quizz screen1">
 			<div class="step">Comece pelo começo</div>
 
@@ -84,7 +86,7 @@
 
 	<!--CRIAÇÃO QUIZZ PÁGINA 2-->
 
-	<main class="">
+	<main class="hidden">
 		<div class="user-create-quizz screen2">
 			<div class="step">Crie suas perguntas</div>
 
@@ -146,7 +148,7 @@
 	<!--FIM QUIZZ PÁGINA 2-->
 
 	<!--CRIAÇÃO QUIZZ PÁGINA 3-->
-	<main class="">
+	<main class="hidden">
 		<div class="user-create-quizz screen3">
 			<div class="step">Agora, decida os níveis!</div>
 			<div class="perguntas pagina3">

@@ -219,7 +219,7 @@ function showResults() {
 	let score = Math.round((rightAnswers / qIndex) * 100);
 
 	for (let i = 0; i < levels.length; i++) {
-		if (score < levels[i].minValue) {
+		if (score <= levels[i].minValue) {
 			resultsDiv.innerHTML = `
 			<div class="results-header">
 				<p>${levels[i].minValue}</p>
@@ -267,11 +267,11 @@ function returnHome() {
 // validação criação quizz step1
 
 let quizzCreated = {
-	title: "Título do quizz",
-	image: "https://http.cat/411.jpg",
+	title: 'Título do quizz',
+	image: 'https://http.cat/411.jpg',
 	questions: [],
-	levels: []
-}
+	levels: [],
+};
 
 let quizzUserTitle = document.getElementById('title-quizz-user');
 let quizzUserUrl = document.getElementById('url-quizz-user');
@@ -314,7 +314,12 @@ function validarStep1() {
 		}
 	};
 
-	if (title() === true && verificarURL(quizzUserUrl.value) === true && questions() === true && levels() === true) {
+	if (
+		title() === true &&
+		verificarURL(quizzUserUrl.value) === true &&
+		questions() === true &&
+		levels() === true
+	) {
 		alert('IR PARA PRÓXIMA PÁGINA');
 		console.log(quizzUserTitle.value);
 		console.log(quizzUserUrl.value);
@@ -349,7 +354,30 @@ function validarStep2() {
 	let corPergunta = () => {
 		const input = document.getElementById('pergunta-background');
 		if (input.value[0] === '#' && input.value.length === 7) {
-			const hex = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'A', 'b', 'B', 'c', 'C', 'd', 'D', 'e', 'E', 'f', 'F'];
+			const hex = [
+				'0',
+				'1',
+				'2',
+				'3',
+				'4',
+				'5',
+				'6',
+				'7',
+				'8',
+				'9',
+				'a',
+				'A',
+				'b',
+				'B',
+				'c',
+				'C',
+				'd',
+				'D',
+				'e',
+				'E',
+				'f',
+				'F',
+			];
 			for (let i = 1; i < input.value.length; i++) {
 				if (hex.includes(input.value[i]) === false) {
 					return false;
@@ -390,7 +418,7 @@ function popularPerguntas(qtdPerguntas) {
 		const botao = document.querySelector('.screen2 .btn');
 		const novaPergunta = document.createElement('div');
 		novaPergunta.classList.add('container-x');
-		novaPergunta.setAttribute('id', `index-${i}`)
+		novaPergunta.setAttribute('id', `index-${i}`);
 		novaPergunta.innerHTML = `
 				<span class="step title">Pergunta ${i + 1}</span>
 				<span title="Editar">
@@ -407,11 +435,10 @@ function popularPerguntas(qtdPerguntas) {
 }
 
 function chooseQuestion(elemento) {
-	console.log('choose')
-	const container = elemento.parentNode.parentNode
-	console.log(container.id)
+	console.log('choose');
+	const container = elemento.parentNode.parentNode;
+	console.log(container.id);
 }
-
 
 /*página 2 data*/
 
@@ -424,65 +451,63 @@ function verificarURL(valueURL) {
 }
 
 function getInfoPage2() {
-	console.log('get info 2')
-	let quizzUserPerguntaText = document.getElementById('pergunta-texto')
-	let quizzUserPerguntaColor = document.getElementById('pergunta-background')
-	let quizzUserCorrectAnswer = document.getElementById('resposta-user')
-	let quizzUserCorrectUrl = document.getElementById('url-resposta-quizz-user')
-	let quizzUserIncorrectAnswer1 = document.getElementById('wrong-answer-1')
-	let quizzUserIncorrectAnswer1Url = document.getElementById('wrong-answer-url-1')
-	let quizzUserIncorrectAnswer2 = document.getElementById('wrong-answer-2')
-	let quizzUserIncorrectAnswer2Url = document.getElementById('wrong-answer-url-2')
-	let quizzUserIncorrectAnswer3 = document.getElementById('wrong-answer-3')
-	let quizzUserIncorrectAnswer3Url = document.getElementById('wrong-answer-url-3')
+	console.log('get info 2');
+	let quizzUserPerguntaText = document.getElementById('pergunta-texto');
+	let quizzUserPerguntaColor = document.getElementById('pergunta-background');
+	let quizzUserCorrectAnswer = document.getElementById('resposta-user');
+	let quizzUserCorrectUrl = document.getElementById('url-resposta-quizz-user');
+	let quizzUserIncorrectAnswer1 = document.getElementById('wrong-answer-1');
+	let quizzUserIncorrectAnswer1Url = document.getElementById('wrong-answer-url-1');
+	let quizzUserIncorrectAnswer2 = document.getElementById('wrong-answer-2');
+	let quizzUserIncorrectAnswer2Url = document.getElementById('wrong-answer-url-2');
+	let quizzUserIncorrectAnswer3 = document.getElementById('wrong-answer-3');
+	let quizzUserIncorrectAnswer3Url = document.getElementById('wrong-answer-url-3');
 
 	quizzCreated.questions = [
 		{
 			text: quizzUserCorrectAnswer.value,
 			image: quizzUserCorrectUrl.value,
-			isCorrectAnswer: true
+			isCorrectAnswer: true,
 		},
 		{
 			text: quizzUserIncorrectAnswer1.value,
 			image: quizzUserIncorrectAnswer1Url.value,
-			isCorrectAnswer: false
+			isCorrectAnswer: false,
 		},
 		{
 			text: quizzUserIncorrectAnswer2.value,
 			image: quizzUserIncorrectAnswer2Url.value,
-			isCorrectAnswer: false
+			isCorrectAnswer: false,
 		},
 		{
 			text: quizzUserIncorrectAnswer3.value,
 			image: quizzUserIncorrectAnswer3Url.value,
-			isCorrectAnswer: false
-		}
-	]
+			isCorrectAnswer: false,
+		},
+	];
 
 	for (let i = 0; i < quizzCreated.questions.length; i++) {
-		console.log(quizzCreated.questions[i].text)
+		console.log(quizzCreated.questions[i].text);
 	}
 
 	function temConteudo(elemento) {
 		if (elemento.text != '') {
-			return true
+			return true;
 		}
-		return false
-
+		return false;
 	}
-	function urlValida(elemento){
-		if(verificarURL(elemento.image)===true){
-			return true
+	function urlValida(elemento) {
+		if (verificarURL(elemento.image) === true) {
+			return true;
 		}
-		return false
+		return false;
 	}
-	const newArr = quizzCreated.questions.filter(temConteudo)
-	if(newArr[0] === undefined || newArr[1] === undefined){
-		console.log('énecessário pelo menos 1 pergunta e uma resposta')
+	const newArr = quizzCreated.questions.filter(temConteudo);
+	if (newArr[0] === undefined || newArr[1] === undefined) {
+		console.log('énecessário pelo menos 1 pergunta e uma resposta');
 	}
-	const newArrOK = newArr.filter(urlValida)
-	console.log(newArrOK)
+	const newArrOK = newArr.filter(urlValida);
+	console.log(newArrOK);
 	//verificar no final se a quizzCreated.questions.length === quizzUserHowManyQuestions
 	//verificar no final se a quizzCreated.questions.length === quizzUserHowManyLevels
-
 }
