@@ -57,4 +57,12 @@
 		margin-bottom: 0;
 		margin-right: 21px;
 	}
+
+	.loading {
+		font-size: 30px;
+	}
+
+	.loading-gif {
+		width: 275px;
+	}
 }

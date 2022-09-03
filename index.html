@@ -16,7 +16,8 @@
 	<header><span>BuzzQuizz</span></header>
 
 	<!-- PÁGINA INICIAL -->
-	<main class="quizz-list-page hidden">
+	<div class="show-home"></div>
+	<main class="quizz-list-page">
 		<div class="create-your-quizz hidden">
 			<span>Você não criou nenhum quizz ainda :(</span>
 			<div onclick="goScreen1()">Criar Quiz</div>
@@ -35,19 +36,17 @@
 					<img src="https://img.estadao.com.br/thumbs/640/resources/jpg/2/1/1649110304012.jpg" />
 					<div class="gradient-filter"></div>
 					<span>Testando quizz 123 aumentando as linhas para ver se passa da div</span>
+					<div class="edit-quizz">
+						<span class="ionIcon"><ion-icon name="create-outline"></ion-icon></span>
+						<span class="ionIcon"><ion-icon name="trash-outline"></ion-icon></span>
+					</div>
 				</li>
 			</ul>
 		</div>
 
 		<div class="all-quizz">
 			<span>Todos os Quizzes</span>
-			<ul class="quizzes">
-				<li class="single-quizz">
-					<img src="https://img.estadao.com.br/thumbs/640/resources/jpg/2/1/1649110304012.jpg" />
-					<div class="gradient-filter"></div>
-					<span>Testando quizz 123 aumentando as linhas para ver se passa da div</span>
-				</li>
-			</ul>
+			<ul class="quizzes"></ul>
 		</div>
 	</main>
 	<!-- FIM PÁGINA INICIAL -->
@@ -85,7 +84,7 @@
 
 	<!--CRIAÇÃO QUIZZ PÁGINA 2-->
 
-	<main class="hidden">
+	<main class="">
 		<div class="user-create-quizz screen2">
 			<div class="step">Crie suas perguntas</div>
 
@@ -210,7 +209,7 @@
 
 	<!--CRIAÇÃO QUIZZ PÁGINA 4-->
 	<main class="">
-		<div class="user-create-quizz screen4">
+		<div class="user-create-quizz screen4 hidden">
 			<div class="step">Seu quizz está pronto!</div>
 
 				<div class="img-container">
@@ -247,13 +246,23 @@
 
 		<div class="results-box hidden">
 			<div class="results"></div>
-
 			<div class="restart-quizz" onclick="restartThisQuizz()">Reiniciar Quizz</div>
 			<div class="home" onclick="returnHome()">Voltar para home</div>
 		<div class="results-box">
 
 	</main>
 	<!-- FIM PÁGINA FAZER QUIZZ -->
+
+	<!-- PÁGINA LOADING -->
+
+	<main class="loading-page hidden">
+		<div class="loading">
+			<img class='loading-gif' src="https://icon-library.com/images/loading-icon-animated-gif/loading-icon-animated-gif-7.jpg" alt="loading...">
+			<span>Carregando...</span>
+		</div>
+	</main>
+
+	<!-- FIM PÁGINA LOADING -->
 
 	<!--Scripts adicionados - ION ICONS, AXIOS, SCRIPT.JS-->
 	<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
