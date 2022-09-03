@@ -70,6 +70,16 @@ function getQuizzError(error) {
 	alert(`Erro ${error.response.status}: ${error.response.data}`);
 }
 
+// Deletar quizz do usuário
+function deleteQuizz() {
+	if (confirm('Você tem certeza que deseja deletar esse quizz?') === true) {
+		console.log('confirmado');
+		window.location.reload();
+	} else {
+		console.log('desistiu');
+	}
+}
+
 // ir para página do quizz
 function getQuizzInfo(data) {
 	const quizzPage = axios.get(`${urlAPI}/${data.id}`);
