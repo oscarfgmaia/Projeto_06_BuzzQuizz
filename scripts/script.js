@@ -4,6 +4,7 @@ const quizzListPage = document.querySelector('.quizz-list-page');
 const createQuizzPage = document.querySelector('.create-quizz');
 const doQuizzPage = document.querySelector('.do-quizz-page');
 const resultsBox = document.querySelector('.results-box');
+const loading = document.querySelector('.loading-page');
 let quizzUrl = {};
 let qIndex = 0;
 let rightAnswers = 0;
@@ -26,6 +27,15 @@ function comparador() {
 	return Math.random() - 0.5;
 }
 
+// Mostrar carregando página
+function loadingPage() {
+	if (loading.classList.contains('hidden')) {
+		loading.classList.remove('hidden');
+	} else {
+		loading.classList.add('hidden');
+	}
+}
+
 // Ir para a página de criar quizz
 function goScreen1() {
 	quizzListPage.classList.add('hidden');
@@ -36,7 +46,7 @@ function goScreen1() {
 
 function getQuizzList() {
 	const quizzList = axios.get(`${urlAPI}`);
-
+	loadingPage();
 	quizzList.then(fillQuizList);
 	quizzList.catch(getQuizzError);
 }
@@ -44,7 +54,7 @@ function getQuizzList() {
 function fillQuizList(promise) {
 	const array = promise.data;
 	quizzList.innerHTML = '';
-
+	loadingPage();
 	array.forEach((i) => {
 		quizzList.innerHTML += `
 		<li class="single-quizz" onclick="getQuizzInfo(this)" id="${i.id}" title="${i.title}">
@@ -60,16 +70,29 @@ function getQuizzError(error) {
 	alert(`Erro ${error.response.status}: ${error.response.data}`);
 }
 
+// Deletar quizz do usuário
+function deleteQuizz() {
+	if (confirm('Você tem certeza que deseja deletar esse quizz?') === true) {
+		console.log('confirmado');
+		window.location.reload();
+	} else {
+		console.log('desistiu');
+	}
+}
+
 // ir para página do quizz
 function getQuizzInfo(data) {
 	const quizzPage = axios.get(`${urlAPI}/${data.id}`);
 	quizzUrl = data;
+
+	loadingPage();
 
 	quizzPage.then(goToQuizz);
 	quizzPage.catch(getQuizzError);
 }
 
 function goToQuizz(promise) {
+	loadingPage();
 	levels = promise.data.levels;
 	const questions = promise.data.questions;
 
@@ -82,6 +105,8 @@ function goToQuizz(promise) {
 	doQuizzPage.classList.remove('hidden');
 
 	fillQuestions(questions);
+	const quizzHeader = document.querySelector('.quizz-header');
+	quizzHeader.scrollIntoView();
 }
 
 // Popular página do quizz
@@ -128,7 +153,14 @@ function fillQuestions(questions) {
 // Seleção de respostas
 function selectAnswer(selectedData) {
 	const answers = selectedData.parentNode.getElementsByTagName('li');
-	console.log(selectedData.classList);
+
+	let scrollToNextQuestion = () => {
+		const nextQuestion = selectedData.parentNode.parentNode.nextElementSibling;
+		if (nextQuestion !== null) {
+			nextQuestion.scrollIntoView();
+		}
+	};
+	setTimeout(scrollToNextQuestion, 2000);
 
 	for (let i = 0; i < answers.length; i++) {
 		if (answers[i].classList.contains('selected')) {
@@ -174,6 +206,10 @@ function selectAnswer(selectedData) {
 	if (qIndex === selectedAnswers) {
 		resultsBox.classList.remove('hidden');
 		setTimeout(showResults, 1000);
+		let scrollToResult = () => {
+			resultsBox.scrollIntoView();
+		};
+		setTimeout(scrollToResult, 2000);
 	}
 }
 
@@ -186,7 +222,7 @@ function showResults() {
 		if (score < levels[i].minValue) {
 			resultsDiv.innerHTML = `
 			<div class="results-header">
-				<p> Você acertou ${score}%: ${levels[i].minValue}</p>
+				<p>${levels[i].minValue}</p>
 			</div>
 			<div class="results-description">
 				<img src=${levels[i].image} alt="${levels[i].text}" />
@@ -206,19 +242,27 @@ function restartThisQuizz() {
 	getQuizzInfo(quizzUrl);
 	resultsBox.classList.add('hidden');
 	console.log(resultsBox.innerHTML);
+	const quizzHeader = document.querySelector('.quizz-header');
+	quizzHeader.scrollIntoView();
 }
 
 // Voltar para HomePage
 
 function returnHome() {
-	resetVariables();
-	quizzUrl = {};
-	doQuizzPage.classList.add('hidden');
-	resultsBox.classList.add('hidden');
-	quizzListPage.classList.remove('hidden');
-
-	console.log(resultsBox.innerHTML);
+	window.location.reload();
 }
+
+// // mostrar número de caracteres no input (colocar no input ou textarea onkeyup="showChars(this)")
+
+// function showChars(num) {
+// 	console.log(num.value.length);
+// }
+
+// // mostrar número de caracteres no input (colocar no input ou textarea onkeyup="showChars(this)")
+
+// function showChars(num) {
+// 	console.log(num.value.length);
+// }
 
 // validação criação quizz step1
 
@@ -274,12 +318,14 @@ function validarStep1() {
 		alert('IR PARA PRÓXIMA PÁGINA');
 		console.log(quizzUserTitle.value);
 		console.log(quizzUserUrl.value);
-		console.log(quizzUserHowManyQuestions);
-		console.log(quizzUserHowManyLevels);
+		console.log(quizzUserHowManyQuestions.value);
+		console.log(quizzUserHowManyLevels.value);
 
-		quizzCreated.title = quizzUserTitle.value;
-		quizzCreated.image = quizzUserUrl.value;
-		console.log(quizzCreated)
+		const screen1 = document.querySelector('.create-quizz');
+		const screen2 = screen1.nextElementSibling;
+		screen1.classList.add('hidden');
+		screen2.classList.remove('hidden');
+
 		return true;
 	} else {
 		alert('Por favor, preencha os dados corretamente.');
