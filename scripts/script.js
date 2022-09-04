@@ -10,7 +10,10 @@ let qIndex = 0;
 let rightAnswers = 0;
 let selectedAnswers = 0;
 let levels;
+let idsUsuario = JSON.parse(localStorage.getItem('usuarioLocal'));
+
 getQuizzList();
+window.scrollTo({ top: 0, behavior: 'smooth' });
 
 // reset variables
 function resetVariables() {
@@ -70,6 +73,8 @@ function getQuizzError(error) {
 	alert(`Erro ${error.response.status}: ${error.response.data}`);
 }
 
+//popular lista de quizz do usuario
+
 // Deletar quizz do usuário
 function deleteQuizz() {
 	if (confirm('Você tem certeza que deseja deletar esse quizz?') === true) {
@@ -106,7 +111,7 @@ function goToQuizz(promise) {
 
 	fillQuestions(questions);
 	const quizzHeader = document.querySelector('.quizz-header');
-	quizzHeader.scrollIntoView();
+	quizzHeader.scrollIntoView({ block: 'start', behavior: 'smooth' });
 }
 
 // Popular página do quizz
@@ -157,7 +162,7 @@ function selectAnswer(selectedData) {
 	let scrollToNextQuestion = () => {
 		const nextQuestion = selectedData.parentNode.parentNode.nextElementSibling;
 		if (nextQuestion !== null) {
-			nextQuestion.scrollIntoView();
+			nextQuestion.scrollIntoView({ block: 'start', behavior: 'smooth' });
 		}
 	};
 	setTimeout(scrollToNextQuestion, 2000);
@@ -207,7 +212,7 @@ function selectAnswer(selectedData) {
 		resultsBox.classList.remove('hidden');
 		setTimeout(showResults, 1000);
 		let scrollToResult = () => {
-			resultsBox.scrollIntoView();
+			resultsBox.scrollIntoView({ block: 'start', behavior: 'smooth' });
 		};
 		setTimeout(scrollToResult, 2000);
 	}
@@ -243,7 +248,7 @@ function restartThisQuizz() {
 	resultsBox.classList.add('hidden');
 	console.log(resultsBox.innerHTML);
 	const quizzHeader = document.querySelector('.quizz-header');
-	quizzHeader.scrollIntoView();
+	quizzHeader.scrollIntoView({ block: 'start', behavior: 'smooth' });
 }
 
 // Voltar para HomePage
@@ -277,6 +282,7 @@ let quizzUserTitle = document.getElementById('title-quizz-user');
 let quizzUserUrl = document.getElementById('url-quizz-user');
 let quizzUserHowManyQuestions = document.getElementById('questions-quizz-user');
 let quizzUserHowManyLevels = document.getElementById('levels-quizz-user');
+
 function validarStep1() {
 	/*página 1 data*/
 	quizzUserTitle = document.getElementById('title-quizz-user');
@@ -492,7 +498,8 @@ function getInfoPage2() {
 		console.log(respostasComUrlValida);
 		if (
 			respostasComUrlValida.length === respostasComConteudo.length &&
-			respostasComUrlValida.length > 2) {
+			respostasComUrlValida.length >= 2
+		) {
 			for (let i = 0; i < respostasComUrlValida.length; i++) {
 				if (i === 0) {
 					questionObj.answers.push(respostasComUrlValida[i]);
@@ -593,19 +600,34 @@ function getInfoPage3() {
 	console.log(quizzCreated);
 }
 
-
-
-function postQuizz(){
-	let promise = axios.post(urlAPI,quizzCreated);
-	promise.then(mostrarQuizz);
+function postQuizz() {
+	let promise = axios.post(urlAPI, quizzCreated);
+	promise.then(envioQuizzSucesso);
 	promise.catch(erroNoEnvio);
 }
 
-function mostrarQuizz(promise){
-	console.log(promise.data)
-	console.log(promise.data.id)
+function envioQuizzSucesso(promise) {
+	console.log(`promise`);
+	console.log(`${promise}`);
+	console.log(`promise.data`);
+	console.log(promise.data); // é esse que eu quero
+	console.log('promise.data.id');
+	console.log(promise.data.id);
+
+	localUser(promise.data.id);
 }
 
-function erroNoEnvio(erro){
-	console.log(erro)
+function localUser(dadosID) {
+	if (localStorage.getItem('idLocal') === null) {
+		localStorage.setItem('idLocal', '[]');
+	}
+	let dadosDesserializados = JSON.parse(localStorage.getItem('idLocal')); //transforma a string em dados de volta (array/objeto/etc)
+	dadosDesserializados.push(dadosID); // acrescenta o id do quizz que acabou de ser criado a lista puxada do localStorage
+	let dadosSerializados = JSON.stringify(dadosDesserializados); // transforma o array em string
+	localStorage.setItem('idLocal', dadosSerializados); // volta os dados para o localStorage em forma de string
+}
+
+function erroNoEnvio(erro) {
+	console.log(`${erro.response.status}: ${erro.response.statusText}`);
+	console.log(erro.response);
 }

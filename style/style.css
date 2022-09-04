@@ -403,7 +403,6 @@ textarea::placeholder {
 	width: 100vw;
 	height: fit-content;
 	padding-bottom: 10px;
-	margin-top: -10px;
 }
 
 .quizz-header {
