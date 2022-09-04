@@ -353,14 +353,14 @@ function validarStep1() {
 
 	let verifyURL = (string) => {
 		try {
-		 let url = new URL(string)
-		 testesAprovados++
-		 return true
-	   } catch(err) {
-		valueURL.style.backgroundColor = "red";
-		   return false
-	   }
-	 }
+			let url = new URL(string);
+			testesAprovados++;
+			return true;
+		} catch (err) {
+			valueURL.style.backgroundColor = 'red';
+			return false;
+		}
+	};
 
 	let questions = () => {
 		// + na frente da string converte para inteiro ou float também
@@ -391,11 +391,11 @@ function validarStep1() {
 	};
 
 	let testesAprovados = 0;
-	title()
-	levels()
-	questions()
-	verifyURL(quizzUserUrl.value)
-	//	if (title() === true && verificarURL(quizzUserUrl) === true && questions() === true &&levels() === true) 
+	title();
+	levels();
+	questions();
+	verifyURL(quizzUserUrl.value);
+	//	if (title() === true && verificarURL(quizzUserUrl) === true && questions() === true &&levels() === true)
 	if (testesAprovados == 4) {
 		alert('IR PARA PRÓXIMA PÁGINA');
 		quizzCreated.title = quizzUserTitle.value;
@@ -641,12 +641,12 @@ function chooseQuestion(elemento) {
 
 function verificarURL(string) {
 	try {
-	 let url = new URL(string)
-	 return true
-   } catch(err) {
-	   return false
-   }
- }
+		let url = new URL(string);
+		return true;
+	} catch (err) {
+		return false;
+	}
+}
 
 function getInfoPage2(index) {
 	console.log(index);
@@ -877,10 +877,12 @@ function envioQuizzSucesso(promise) {
 	const singleQuizzCreated = document.querySelector('.img-container');
 	singleQuizzCreated.innerHTML = '';
 	singleQuizzCreated.innerHTML = `
-	<li class="single-quizz" onclick="getQuizzInfo(this)" id="${promise.data.id}" title="${promise.data.title}">
-		<img src=${promise.data.image} alt="${promise.data.title}"/>
-		<div class="gradient-filter"></div>
-		<span>${promise.data.title}</span>
+	<li class="single-quizz">
+		<div class="organize" id="${i.id}" title="${i.title}" onclick="getQuizzInfo(this)">
+			<img src=${i.image} alt="${i.title}"/>
+			<div class="gradient-filter"></div>
+			<span>${i.title}</span>
+		</div>
 	</li>
 	`;
 	loadingPage();
