@@ -286,40 +286,60 @@ function validarStep1() {
 
 	let title = () => {
 		if (quizzUserTitle.value.length >= 20 && quizzUserTitle.value.length <= 65) {
+			testesAprovados++;
 			return true;
 		} else {
+			quizzUserTitle.style.backgroundColor = "red";
 			return false;
 		}
 	};
 
-	let questions = () => {
-		// + na frente da string converte para inteiro ou float também
-		quizzUserHowManyQuestions = +quizzUserHowManyQuestions.value;
-		quizzUserHowManyQuestions = Math.round(quizzUserHowManyQuestions);
-		if (quizzUserHowManyQuestions >= 3 && quizzUserHowManyQuestions != NaN) {
+	let verifyURL = (valueURL)=> {
+		if (valueURL.value.includes('http') === true) {
+			testesAprovados++
 			return true;
 		} else {
+			console.log(valueURL.value)
+			valueURL.style.backgroundColor = "red";
+			return false;
+		}
+	}
+
+	let questions = () => {
+		// + na frente da string converte para inteiro ou float também
+		let input = +quizzUserHowManyQuestions.value;
+		input = Math.round(input);
+		if (input >= 3 && input != NaN) {
+			testesAprovados++;
+			quizzUserHowManyQuestions = input
+			return true;
+		} else {
+			quizzUserHowManyQuestions.style.backgroundColor = "red";
 			return false;
 		}
 	};
 
 	let levels = () => {
 		// + na frente da string converte para inteiro ou float também
-		quizzUserHowManyLevels = +quizzUserHowManyLevels.value;
-		quizzUserHowManyLevels = Math.round(quizzUserHowManyLevels);
-		if (quizzUserHowManyLevels >= 2 && quizzUserHowManyLevels != NaN) {
+		let input = +quizzUserHowManyLevels.value;
+		input = Math.round(input);
+		if (input >= 2 && input != NaN) {
+			testesAprovados++;
+			quizzUserHowManyLevels = input
 			return true;
 		} else {
+			quizzUserHowManyLevels.style.backgroundColor = "red";
 			return false;
 		}
 	};
 
-	if (
-		title() === true &&
-		verificarURL(quizzUserUrl.value) === true &&
-		questions() === true &&
-		levels() === true
-	) {
+	let testesAprovados = 0;
+	title()
+	levels()
+	questions()
+	verifyURL(quizzUserUrl)
+//	if (title() === true && verificarURL(quizzUserUrl) === true && questions() === true &&levels() === true) 
+		if(testesAprovados==4){
 		alert('IR PARA PRÓXIMA PÁGINA');
 		quizzCreated.title = quizzUserTitle.value;
 		quizzCreated.image = quizzUserUrl.value;
@@ -327,69 +347,172 @@ function validarStep1() {
 		const screen2 = screen1.nextElementSibling;
 		screen1.classList.add('hidden');
 		screen2.classList.remove('hidden');
-
+		popularPerguntas(quizzUserHowManyQuestions);
+		testesAprovados = 0;
 		return true;
 	} else {
 		alert('Por favor, preencha os dados corretamente.');
 		return false;
 	}
-	popularPerguntas(quizzUserHowManyQuestions);
+
 }
 
 //falta finalizar a verificação das respostas incorretas
 function validarStep2() {
-	let respostaCorreta = () => {
-		const input = document.getElementById('resposta-user');
-		if (input.value != '') {
-			console.log(input.value);
-			return true;
+	let array=[]
+	for(let i = 0; i< quizzUserHowManyQuestions ; i++){
+		if(typeof(getInfoPage2(i)) === 'object'){
+			array.push(getInfoPage2(i))
 		}
-		console.log(input.value);
-		return false;
-	};
-	verificarRespostaIncorreta('wrong-answer-1');
-	verificarRespostaIncorreta('wrong-answer-2');
-	verificarRespostaIncorreta('wrong-answer-3');
-
-	let verificarRespostaIncorreta = (id) => {
-		const wrong = document.querySelector('#' + id);
-		let li = wrong.parentNode;
-		let wrongUrl = li.nextElementSibling.children[0];
-		if (wrong.value != '') {
-			verificarURL(wrongUrl.value);
-		}
-	};
+	}
+	if(array.length === quizzUserHowManyQuestions){
+		array.forEach(qstObj => {
+			quizzCreated.questions.push(qstObj)
+		})
+	}
+	console.log(array.length)
+	console.log(quizzUserHowManyQuestions)
 }
-const perguntasData = [];
+
+function popularPerguntas(qtdPerguntas) {
+	const pagina2 = document.querySelector('.screen2')
+	pagina2.innerHTML = `<div class="step">Crie suas perguntas</div>`
+
+	for (let i = 0; i < quizzUserHowManyQuestions; i++) {
+		pagina2.innerHTML+=
+		`
+			<div class="perguntas pagina2 index-${i}">
+			<span class="step title pergunta">Pergunta ${i+1}</span>
+			<ul class="pergunta-ul">
+				<li>
+					<input class="pergunta-texto" type="text" name="pergunta-texo" id="pergunta-texto" placeholder="Texto da pergunta" />
+				</li>
+				<li>
+					<input class="pergunta-background" type="text" name="pergunta-background" id="pergunta-background"
+						placeholder="Cor de fundo da pergunta" />
+				</li>
+			</ul>
+			<span class="step title resposta-correta">Resposta correta</span>
+			<ul class="pergunta-ul">
+				<li>
+					<input class="resposta-user" type="text" name="resposta-user" id="resposta-user" placeholder="Resposta correta" />
+				</li>
+				<li>
+					<input class="url-resposta-quizz-user" type="text" name="url-resposta-quizz-user" id="url-resposta-quizz-user"
+						placeholder="URL da imagem" />
+				</li>
+			</ul>
+			<span class="step title resposta-incorreta">Respostas incorretas</span>
+			<ul class="pergunta-ul">
+				<li>
+					<input class="wrong-answer-1" type="text" name="wrong-answer 1" id="wrong-answer-1"
+						placeholder="Resposta incorreta 1" />
+				</li>
+				<li>
+					<input class="wrong-answer-url-1" type="text" name="wrong-answer-url 1" id="wrong-answer-url-1"
+						placeholder="URL da imagem 1" />
+				</li>
+
+				<li>
+					<input class="wrong-answer-2" type="text" name="wrong-answer 2" id="wrong-answer-2"
+						placeholder="Resposta incorreta 2" />
+				</li>
+				<li>
+					<input class="wrong-answer-url-2" type="text" name="wrong-answer-url 2" id="wrong-answer-url-2"
+						placeholder="URL da imagem 2" />
+				</li>
+
+				<li>
+					<input class="wrong-answer-3" type="text" name="wrong-answer 3" id="wrong-answer-3"
+						placeholder="Resposta incorreta 3" />
+				</li>
+				<li>
+					<input class="wrong-answer-url-3" type="text" name="wrong-answer-url-3" id="wrong-answer-url-3"
+						placeholder="URL da imagem 3" />
+				</li>
+			</ul>
+		</div>
+		`
+	}
+	pagina2.innerHTML+='<div class="btn" onclick="validarStep2()">Prosseguir pra criar níveis</div>'
+	for (let i = 0; i < qtdPerguntas; i++) {
+		const pagina = document.querySelector('.user-create-quizz.screen2');
+		const botao = document.querySelector('.screen2 .btn');
+		const novaPergunta = document.createElement('div');
+		novaPergunta.classList.add('container-x');
+		novaPergunta.classList.add(`index-${i}`)
+		novaPergunta.innerHTML = 
+			`
+				<span class="step title">Pergunta ${i + 1}</span>
+				<span title="Editar">
+					<svg width="26" height="24" viewBox="0 0 26 24" fill="none" xmlns="http://www.w3.org/2000/svg" onclick="chooseQuestion(this)">
+						<path
+							d="M18.1594 15.4969L19.6038 14.0594C19.8295 13.8348 20.2222 13.992 20.2222 14.3155V20.8471C20.2222 22.0375 19.2517 23.0034 18.0556 23.0034H2.16667C0.970486 23.0034 0 22.0375 0 20.8471V5.03462C0 3.84419 0.970486 2.87837 2.16667 2.87837H14.5122C14.8326 2.87837 14.9951 3.2647 14.7694 3.4938L13.325 4.9313C13.2573 4.99868 13.167 5.03462 13.0677 5.03462H2.16667V20.8471H18.0556V15.7485C18.0556 15.6542 18.0917 15.5643 18.1594 15.4969ZM25.2281 6.43169L13.3747 18.2282L9.2941 18.6774C8.11146 18.8077 7.10486 17.8149 7.23576 16.629L7.68715 12.568L19.5406 0.771533C20.5743 -0.257178 22.2444 -0.257178 23.2736 0.771533L25.2236 2.71216C26.2573 3.74087 26.2573 5.40747 25.2281 6.43169ZM20.7684 7.81978L18.1458 5.20981L9.75903 13.5608L9.42951 16.4942L12.3771 16.1663L20.7684 7.81978ZM23.6934 4.2395L21.7434 2.29888C21.5583 2.1147 21.2559 2.1147 21.0753 2.29888L19.6806 3.68696L22.3031 6.29692L23.6979 4.90884C23.8785 4.72017 23.8785 4.42368 23.6934 4.2395Z"
+							fill="black" />
+					</svg>
+				</span>
+			`;
+		pagina.insertBefore(novaPergunta, botao);
+	}
+	const primeiroEditar = document.querySelector('.container-x')
+	primeiroEditar.classList.add('hidden')
+	let esconderPerguntas = () =>{
+		const perguntas = document.querySelectorAll('.perguntas.pagina2')
+		for(let i =0;i<perguntas.length;i++){
+			perguntas[i].classList.add('hidden')
+		}
+		perguntas[0].classList.remove('hidden')
+		perguntas[0].classList.add('onView')
+	}
+	esconderPerguntas()
+}
 
 function chooseQuestion(elemento) {
-	console.log('choose');
 	const container = elemento.parentNode.parentNode;
-	console.log(container.id);
+	console.log(container.classList[1])
+
+	const paginaSelecionada = document.querySelector('.onView')
+	paginaSelecionada.classList.remove('onView')
+	const containerPaginaSelecionada = document.querySelector('.container-x.hidden')
+	containerPaginaSelecionada.classList.remove('hidden')
+	paginaSelecionada.classList.add('hidden')
+
+	const indexPag = container.classList[1];
+	console.log(indexPag)
+	const perguntaDesejada = document.querySelector(`.${indexPag}`)
+	perguntaDesejada.classList.remove('hidden')
+	perguntaDesejada.classList.add('onView')
+
+	const esconderContainerAtual = document.querySelector(`.container-x.${indexPag}`)
+	esconderContainerAtual.classList.add('hidden')
+	
+	const scrolltoView = document.querySelector('.screen2 .step')
+	scrolltoView.scrollIntoView({behavior: "smooth"})
 }
 
 /*página 2 data*/
 
 function verificarURL(valueURL) {
-	if (valueURL.includes('http') === true) {
+	if (valueURL.value.includes('http') === true) {
 		return true;
 	} else {
+		console.log(valueURL.value)
 		return false;
 	}
 }
 
-function getInfoPage2() {
-	console.log('get info 2');
-	let quizzUserPerguntaText = document.getElementById('pergunta-texto');
-	let quizzUserPerguntaColor = document.getElementById('pergunta-background');
-	let quizzUserCorrectAnswer = document.getElementById('resposta-user');
-	let quizzUserCorrectUrl = document.getElementById('url-resposta-quizz-user');
-	let quizzUserIncorrectAnswer1 = document.getElementById('wrong-answer-1');
-	let quizzUserIncorrectAnswer1Url = document.getElementById('wrong-answer-url-1');
-	let quizzUserIncorrectAnswer2 = document.getElementById('wrong-answer-2');
-	let quizzUserIncorrectAnswer2Url = document.getElementById('wrong-answer-url-2');
-	let quizzUserIncorrectAnswer3 = document.getElementById('wrong-answer-3');
-	let quizzUserIncorrectAnswer3Url = document.getElementById('wrong-answer-url-3');
+function getInfoPage2(index) {
+	console.log(index);
+	let quizzUserPerguntaText = document.querySelector(`.index-${index} .pergunta-texto`);
+	let quizzUserPerguntaColor = document.querySelector(`.index-${index} .pergunta-background`);
+	let quizzUserCorrectAnswer = document.querySelector(`.index-${index} .resposta-user`);
+	let quizzUserCorrectUrl = document.querySelector(`.index-${index} .url-resposta-quizz-user`);
+	let quizzUserIncorrectAnswer1 = document.querySelector(`.index-${index} .wrong-answer-1`);
+	let quizzUserIncorrectAnswer1Url = document.querySelector(`.index-${index} .wrong-answer-url-1`);
+	let quizzUserIncorrectAnswer2 = document.querySelector(`.index-${index} .wrong-answer-2`);
+	let quizzUserIncorrectAnswer2Url = document.querySelector(`.index-${index} .wrong-answer-url-2`);
+	let quizzUserIncorrectAnswer3 = document.querySelector(`.index-${index} .wrong-answer-3`);
+	let quizzUserIncorrectAnswer3Url = document.querySelector(`.index-${index} .wrong-answer-url-3`);
 
 	let possibilidadeRespostas = [
 		{
@@ -430,30 +553,7 @@ function getInfoPage2() {
 
 	let corPergunta = () => {
 		if (questionObj.color[0] === '#' && questionObj.color.length === 7) {
-			const hex = [
-				'0',
-				'1',
-				'2',
-				'3',
-				'4',
-				'5',
-				'6',
-				'7',
-				'8',
-				'9',
-				'a',
-				'A',
-				'b',
-				'B',
-				'c',
-				'C',
-				'd',
-				'D',
-				'e',
-				'E',
-				'f',
-				'F',
-			];
+			const hex = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'A', 'b', 'B', 'c', 'C', 'd', 'D', 'e', 'E', 'f', 'F',];
 			for (let i = 1; i < questionObj.color.length; i++) {
 				if (hex.includes(questionObj.color[i]) === false) {
 					return false;
@@ -475,6 +575,7 @@ function getInfoPage2() {
 		if (verificarURL(elemento.image) === true) {
 			return true;
 		}
+		console.log(elemento)
 		return false;
 	}
 
@@ -485,16 +586,14 @@ function getInfoPage2() {
 	setarInputsTitulosPerguntas();
 	if (titlePergunta() === true && corPergunta() === true) {
 		const respostasComConteudo = possibilidadeRespostas.filter(temConteudo);
-		console.log('respostasIncorretasComConteudo');
-		console.log(respostasComConteudo);
+
 		const respostasComUrlValida = respostasComConteudo.filter(urlValida);
-		console.log('respostaComUIRL');
-		console.log(respostasComUrlValida);
+
 		if (
 			respostasComUrlValida.length === respostasComConteudo.length &&
-			respostasComUrlValida.length > 2) {
-			for (let i = 0; i < respostasComUrlValida.length; i++) {
-				if (i === 0) {
+			respostasComUrlValida.length >= 2) {
+			for (let i = 0; i < respostasComUrlValida.length; i++) {				if (i === 0
+) {
 					questionObj.answers.push(respostasComUrlValida[i]);
 				} else if (i === 1) {
 					questionObj.answers.push(respostasComUrlValida[i]);
@@ -506,12 +605,14 @@ function getInfoPage2() {
 					console.log('tem coisa errada');
 				}
 			}
-			quizzCreated.questions.push(questionObj);
+			return questionObj;
 		} else {
 			console.log('tem coisa errada - validação respostas');
+			return false;
 		}
 	} else {
 		console.log('tem coisa errada - validação titulo');
+		return false;
 	}
 }
 
@@ -595,17 +696,17 @@ function getInfoPage3() {
 
 
 
-function postQuizz(){
-	let promise = axios.post(urlAPI,quizzCreated);
+function postQuizz() {
+	let promise = axios.post(urlAPI, quizzCreated);
 	promise.then(mostrarQuizz);
 	promise.catch(erroNoEnvio);
 }
 
-function mostrarQuizz(promise){
+function mostrarQuizz(promise) {
 	console.log(promise.data)
 	console.log(promise.data.id)
 }
 
-function erroNoEnvio(erro){
+function erroNoEnvio(erro) {
 	console.log(erro)
 }
