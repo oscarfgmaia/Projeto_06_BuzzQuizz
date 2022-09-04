@@ -13,6 +13,10 @@
 		width: 600px;
 	}
 
+	.quizzes.user {
+		justify-content: left;
+	}
+
 	.question,
 	.results {
 		margin-top: 42px;

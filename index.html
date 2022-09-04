@@ -19,7 +19,7 @@
 
 	<!-- PÁGINA INICIAL -->
 	<div class="show-home"></div>
-	<main class="quizz-list-page hidden">
+	<main class="quizz-list-page">
 		<div class="create-your-quizz hidden">
 			<span>Você não criou nenhum quizz ainda :(</span>
 			<div onclick="goScreen1()">Criar Quiz</div>
@@ -198,14 +198,15 @@
 
 	<!--CRIAÇÃO QUIZZ PÁGINA 4-->
 	<main class="">
-		<div class="user-create-quizz screen4 hidden">
+		<div class="user-create-quizz screen4">
 			<div class="step">Seu quizz está pronto!</div>
 
 				<div class="img-container">
 					<img src="https://guiadoestudante.abril.com.br/wp-content/uploads/sites/4/2010/11/Hogwarts.jpeg?quality=100&strip=info&resize=850,567" alt="hogwarts">	
 				</div>
 
-			<div class="btn" onclick="validarStep1()">Finalizar Quizz</div>
+			<div class="btn" onclick="validarStep1()">Acessar Quizz</div>
+			<div class="home" onclick="returnHome()">Voltar para home</div>
 		</div>
 	</main>
 	<!--FIM QUIZZ PÁGINA 4-->

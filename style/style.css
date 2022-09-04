@@ -138,7 +138,7 @@ header span:hover {
 
 .quizzes {
 	display: flex;
-	justify-content: left;
+	justify-content: center;
 	flex-wrap: wrap;
 }
 
@@ -596,7 +596,8 @@ textarea::placeholder {
 	margin-bottom: 10px;
 }
 
-.results-box .home {
+.results-box .home,
+.screen4 .home {
 	color: #818181;
 	margin-bottom: 20px;
 }
