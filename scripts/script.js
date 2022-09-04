@@ -354,6 +354,7 @@ function validarStep1() {
 		screen1.classList.add('hidden');
 		screen2.classList.remove('hidden');
 		popularPerguntas(quizzUserHowManyQuestions);
+		popularLevels(quizzUserHowManyLevels);
 		testesAprovados = 0;
 		return true;
 	} else {
@@ -378,6 +379,20 @@ function validarStep2() {
 	}
 	console.log(array.length)
 	console.log(quizzUserHowManyQuestions)
+}
+
+function validarStep3() {
+	let array = []
+	for (let i = 0; i < quizzUserHowManyLevels; i++) {
+		if (typeof (getInfoPage3(i)) === 'object') {
+			array.push(getInfoPage3(i))
+		}
+	}
+	if (array.length === quizzUserHowManyLevels) {
+		array.forEach(lvlObj => {
+			quizzCreated.levels.push(lvlObj)
+		})
+	}
 }
 
 function popularPerguntas(qtdPerguntas) {
@@ -462,7 +477,7 @@ function popularPerguntas(qtdPerguntas) {
 	}
 	const primeiroEditar = document.querySelector('.container-x')
 	primeiroEditar.classList.add('hidden')
-	let esconderPerguntas = () => {
+	let esconder1Pergunta = () => {
 		const perguntas = document.querySelectorAll('.perguntas.pagina2')
 		for (let i = 0; i < perguntas.length; i++) {
 			perguntas[i].classList.add('hidden')
@@ -470,39 +485,109 @@ function popularPerguntas(qtdPerguntas) {
 		perguntas[0].classList.remove('hidden')
 		perguntas[0].classList.add('onView')
 	}
-	esconderPerguntas()
+	esconder1Pergunta()
+}
+
+function popularLevels(qtdLevels) {
+	const pagina3 = document.querySelector('.screen3')
+	pagina3.innerHTML = `<div class="step">Agora, decida os níveis!</div>`
+
+	for (let i = 0; i < quizzUserHowManyLevels; i++) {
+		pagina3.innerHTML +=
+			`
+			<div class="perguntas pagina3 index-${i}">
+				<span class="step title">Nível ${i+1}</span>
+				<ul class="pergunta-ul">
+					<li>
+						<input class="nivel-title" type="text" name="nivel-title" id="nivel-title" placeholder="Título do nível" />
+					</li>
+					<li>
+						<input class="percentage" type="text" name="percentage" id="percentage" placeholder="% de acerto mínima" />
+					</li>
+					<li>
+						<input class="url-nivel" type="text" name="url-nivel" id="url-nivel" placeholder="URL da imagem do nível" />
+					</li>
+					<li>
+						<textarea class="description-nivel" name="description-nivel" id="description-nivel"
+							placeholder="Descrição do nível"></textarea>
+					</li>
+				</ul>
+			</div>
+		`
+	}
+	pagina3.innerHTML += '<div class="btn" onclick="validarStep3()">Finalizar Quizz</div>'
+	for (let i = 0; i < qtdLevels; i++) {
+		const pagina = document.querySelector('.user-create-quizz.screen3');
+		const botao = document.querySelector('.screen3 .btn');
+		const novaPergunta = document.createElement('div');
+		novaPergunta.classList.add('container-x');
+		novaPergunta.classList.add(`index-${i}`)
+		novaPergunta.innerHTML =
+			`
+				<span class="step title">Nível ${i + 1}</span>
+				<span title="Editar">
+					<svg width="26" height="24" viewBox="0 0 26 24" fill="none" xmlns="http://www.w3.org/2000/svg" onclick="chooseLevel(this)">
+						<path
+						d="M18.1594 15.4969L19.6038 14.0594C19.8295 13.8348 20.2222 13.992 20.2222 14.3155V20.8471C20.2222 22.0375 19.2517 23.0034 18.0556 23.0034H2.16667C0.970486 23.0034 0 22.0375 0 20.8471V5.03462C0 3.84419 0.970486 2.87837 2.16667 2.87837H14.5122C14.8326 2.87837 14.9951 3.2647 14.7694 3.4938L13.325 4.9313C13.2573 4.99868 13.167 5.03462 13.0677 5.03462H2.16667V20.8471H18.0556V15.7485C18.0556 15.6542 18.0917 15.5643 18.1594 15.4969ZM25.2281 6.43169L13.3747 18.2282L9.2941 18.6774C8.11146 18.8077 7.10486 17.8149 7.23576 16.629L7.68715 12.568L19.5406 0.771533C20.5743 -0.257178 22.2444 -0.257178 23.2736 0.771533L25.2236 2.71216C26.2573 3.74087 26.2573 5.40747 25.2281 6.43169ZM20.7684 7.81978L18.1458 5.20981L9.75903 13.5608L9.42951 16.4942L12.3771 16.1663L20.7684 7.81978ZM23.6934 4.2395L21.7434 2.29888C21.5583 2.1147 21.2559 2.1147 21.0753 2.29888L19.6806 3.68696L22.3031 6.29692L23.6979 4.90884C23.8785 4.72017 23.8785 4.42368 23.6934 4.2395Z"
+						fill="black" />
+					</svg>
+				</span>
+			`;
+		pagina.insertBefore(novaPergunta, botao);
+	}
+	const primeiroEditar = document.querySelector('.screen3 .container-x')
+	primeiroEditar.classList.add('hidden')
+	let esconder1Level = () => {
+		const levels = document.querySelectorAll('.perguntas.pagina3')
+		for (let i = 0; i < levels.length; i++) {
+			levels[i].classList.add('hidden')
+		}
+		levels[0].classList.remove('hidden')
+		levels[0].classList.add('onView')
+	}
+	esconder1Level()
+}
+
+function chooseLevel(elemento) {
+	const container = elemento.parentNode.parentNode;
+	const paginaSelecionada = document.querySelector('.screen3 .onView')
+	paginaSelecionada.classList.remove('onView')
+	const containerPaginaSelecionada = document.querySelector('.screen3 .container-x.hidden')
+	containerPaginaSelecionada.classList.remove('hidden')
+	paginaSelecionada.classList.add('hidden')
+	const indexPag = container.classList[1];
+	const perguntaDesejada = document.querySelector(`.screen3 .${indexPag}`)
+	perguntaDesejada.classList.remove('hidden')
+	perguntaDesejada.classList.add('onView')
+	const esconderContainerAtual = document.querySelector(`.screen3 .container-x.${indexPag}`)
+	esconderContainerAtual.classList.add('hidden')
+	const scrolltoView = document.querySelector('.screen3 .step')
+	scrolltoView.scrollIntoView({ behavior: "smooth" })
 }
 
 function chooseQuestion(elemento) {
 	const container = elemento.parentNode.parentNode;
-	console.log(container.classList[1])
-
-	const paginaSelecionada = document.querySelector('.onView')
+	const paginaSelecionada = document.querySelector('.screen2 .onView')
 	paginaSelecionada.classList.remove('onView')
-	const containerPaginaSelecionada = document.querySelector('.container-x.hidden')
+	const containerPaginaSelecionada = document.querySelector('.screen2 .container-x.hidden')
 	containerPaginaSelecionada.classList.remove('hidden')
 	paginaSelecionada.classList.add('hidden')
-
 	const indexPag = container.classList[1];
-	console.log(indexPag)
 	const perguntaDesejada = document.querySelector(`.${indexPag}`)
 	perguntaDesejada.classList.remove('hidden')
 	perguntaDesejada.classList.add('onView')
-
-	const esconderContainerAtual = document.querySelector(`.container-x.${indexPag}`)
+	const esconderContainerAtual = document.querySelector(`.screen2 .container-x.${indexPag}`)
 	esconderContainerAtual.classList.add('hidden')
-
 	const scrolltoView = document.querySelector('.screen2 .step')
 	scrolltoView.scrollIntoView({ behavior: "smooth" })
 }
 
-/*página 2 data*/
 
 function verificarURL(valueURL) {
-	if (valueURL.value.includes('http') === true) {
+	if (valueURL.includes('http') === true) {
 		return true;
 	} else {
-		console.log(valueURL.value)
+		console.log(valueURL)
 		return false;
 	}
 }
@@ -622,12 +707,12 @@ function getInfoPage2(index) {
 	}
 }
 
-function getInfoPage3() {
+function getInfoPage3(index) {
 	console.log('get info 3');
-	let quizzUserLevelTitle = document.getElementById('nivel-title');
-	let quizzUserLevelPercentage = document.getElementById('percentage');
-	let quizzUserLevelUrl = document.getElementById('url-nivel');
-	let quizzUserLevelDescription = document.getElementById('description-nivel');
+	let quizzUserLevelTitle = document.querySelector(`.index-${index} .nivel-title`);
+	let quizzUserLevelPercentage = document.querySelector(`.index-${index} .percentage`);
+	let quizzUserLevelUrl = document.querySelector(`.index-${index} .url-nivel`);
+	let quizzUserLevelDescription = document.querySelector(`.index-${index} .description-nivel`);
 
 	let lvlObj = {
 		title: '',
@@ -686,13 +771,9 @@ function getInfoPage3() {
 	}
 
 	setarInputs();
-	if (
-		titleLevel() === true &&
-		percentageLevel() === true &&
-		urlValida(lvlObj) &&
-		descriptionLevel() === true
-	) {
+	if (titleLevel() === true && percentageLevel() === true && urlValida(lvlObj) && descriptionLevel() === true) {
 		console.log('ENTROU NO IF');
+		return lvlObj;
 		quizzCreated.levels.push(lvlObj);
 	} else {
 		console.log('Não entrou no IF');
