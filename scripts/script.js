@@ -10,7 +10,10 @@ let qIndex = 0;
 let rightAnswers = 0;
 let selectedAnswers = 0;
 let levels;
+let idsUsuario = JSON.parse(localStorage.getItem('usuarioLocal'));
+
 getQuizzList();
+window.scrollTo({ top: 0, behavior: 'smooth' });
 
 // reset variables
 function resetVariables() {
@@ -70,6 +73,8 @@ function getQuizzError(error) {
 	alert(`Erro ${error.response.status}: ${error.response.data}`);
 }
 
+//popular lista de quizz do usuario
+
 // Deletar quizz do usuário
 function deleteQuizz() {
 	if (confirm('Você tem certeza que deseja deletar esse quizz?') === true) {
@@ -106,7 +111,7 @@ function goToQuizz(promise) {
 
 	fillQuestions(questions);
 	const quizzHeader = document.querySelector('.quizz-header');
-	quizzHeader.scrollIntoView();
+	quizzHeader.scrollIntoView({ block: 'start', behavior: 'smooth' });
 }
 
 // Popular página do quizz
@@ -157,7 +162,7 @@ function selectAnswer(selectedData) {
 	let scrollToNextQuestion = () => {
 		const nextQuestion = selectedData.parentNode.parentNode.nextElementSibling;
 		if (nextQuestion !== null) {
-			nextQuestion.scrollIntoView();
+			nextQuestion.scrollIntoView({ block: 'start', behavior: 'smooth' });
 		}
 	};
 	setTimeout(scrollToNextQuestion, 2000);
@@ -207,7 +212,7 @@ function selectAnswer(selectedData) {
 		resultsBox.classList.remove('hidden');
 		setTimeout(showResults, 1000);
 		let scrollToResult = () => {
-			resultsBox.scrollIntoView();
+			resultsBox.scrollIntoView({ block: 'start', behavior: 'smooth' });
 		};
 		setTimeout(scrollToResult, 2000);
 	}
@@ -243,7 +248,7 @@ function restartThisQuizz() {
 	resultsBox.classList.add('hidden');
 	console.log(resultsBox.innerHTML);
 	const quizzHeader = document.querySelector('.quizz-header');
-	quizzHeader.scrollIntoView();
+	quizzHeader.scrollIntoView({ block: 'start', behavior: 'smooth' });
 }
 
 // Voltar para HomePage
@@ -277,6 +282,7 @@ let quizzUserTitle = document.getElementById('title-quizz-user');
 let quizzUserUrl = document.getElementById('url-quizz-user');
 let quizzUserHowManyQuestions = document.getElementById('questions-quizz-user');
 let quizzUserHowManyLevels = document.getElementById('levels-quizz-user');
+
 function validarStep1() {
 	/*página 1 data*/
 	quizzUserTitle = document.getElementById('title-quizz-user');
@@ -294,7 +300,7 @@ function validarStep1() {
 		}
 	};
 
-	let verifyURL = (valueURL)=> {
+	let verifyURL = (valueURL) => {
 		if (valueURL.value.includes('http') === true) {
 			testesAprovados++
 			return true;
@@ -338,8 +344,8 @@ function validarStep1() {
 	levels()
 	questions()
 	verifyURL(quizzUserUrl)
-//	if (title() === true && verificarURL(quizzUserUrl) === true && questions() === true &&levels() === true) 
-		if(testesAprovados==4){
+	//	if (title() === true && verificarURL(quizzUserUrl) === true && questions() === true &&levels() === true) 
+	if (testesAprovados == 4) {
 		alert('IR PARA PRÓXIMA PÁGINA');
 		quizzCreated.title = quizzUserTitle.value;
 		quizzCreated.image = quizzUserUrl.value;
@@ -359,13 +365,13 @@ function validarStep1() {
 
 //falta finalizar a verificação das respostas incorretas
 function validarStep2() {
-	let array=[]
-	for(let i = 0; i< quizzUserHowManyQuestions ; i++){
-		if(typeof(getInfoPage2(i)) === 'object'){
+	let array = []
+	for (let i = 0; i < quizzUserHowManyQuestions; i++) {
+		if (typeof (getInfoPage2(i)) === 'object') {
 			array.push(getInfoPage2(i))
 		}
 	}
-	if(array.length === quizzUserHowManyQuestions){
+	if (array.length === quizzUserHowManyQuestions) {
 		array.forEach(qstObj => {
 			quizzCreated.questions.push(qstObj)
 		})
@@ -379,10 +385,10 @@ function popularPerguntas(qtdPerguntas) {
 	pagina2.innerHTML = `<div class="step">Crie suas perguntas</div>`
 
 	for (let i = 0; i < quizzUserHowManyQuestions; i++) {
-		pagina2.innerHTML+=
-		`
+		pagina2.innerHTML +=
+			`
 			<div class="perguntas pagina2 index-${i}">
-			<span class="step title pergunta">Pergunta ${i+1}</span>
+			<span class="step title pergunta">Pergunta ${i + 1}</span>
 			<ul class="pergunta-ul">
 				<li>
 					<input class="pergunta-texto" type="text" name="pergunta-texo" id="pergunta-texto" placeholder="Texto da pergunta" />
@@ -434,14 +440,14 @@ function popularPerguntas(qtdPerguntas) {
 		</div>
 		`
 	}
-	pagina2.innerHTML+='<div class="btn" onclick="validarStep2()">Prosseguir pra criar níveis</div>'
+	pagina2.innerHTML += '<div class="btn" onclick="validarStep2()">Prosseguir pra criar níveis</div>'
 	for (let i = 0; i < qtdPerguntas; i++) {
 		const pagina = document.querySelector('.user-create-quizz.screen2');
 		const botao = document.querySelector('.screen2 .btn');
 		const novaPergunta = document.createElement('div');
 		novaPergunta.classList.add('container-x');
 		novaPergunta.classList.add(`index-${i}`)
-		novaPergunta.innerHTML = 
+		novaPergunta.innerHTML =
 			`
 				<span class="step title">Pergunta ${i + 1}</span>
 				<span title="Editar">
@@ -456,9 +462,9 @@ function popularPerguntas(qtdPerguntas) {
 	}
 	const primeiroEditar = document.querySelector('.container-x')
 	primeiroEditar.classList.add('hidden')
-	let esconderPerguntas = () =>{
+	let esconderPerguntas = () => {
 		const perguntas = document.querySelectorAll('.perguntas.pagina2')
-		for(let i =0;i<perguntas.length;i++){
+		for (let i = 0; i < perguntas.length; i++) {
 			perguntas[i].classList.add('hidden')
 		}
 		perguntas[0].classList.remove('hidden')
@@ -485,9 +491,9 @@ function chooseQuestion(elemento) {
 
 	const esconderContainerAtual = document.querySelector(`.container-x.${indexPag}`)
 	esconderContainerAtual.classList.add('hidden')
-	
+
 	const scrolltoView = document.querySelector('.screen2 .step')
-	scrolltoView.scrollIntoView({behavior: "smooth"})
+	scrolltoView.scrollIntoView({ behavior: "smooth" })
 }
 
 /*página 2 data*/
@@ -592,8 +598,8 @@ function getInfoPage2(index) {
 		if (
 			respostasComUrlValida.length === respostasComConteudo.length &&
 			respostasComUrlValida.length >= 2) {
-			for (let i = 0; i < respostasComUrlValida.length; i++) {				if (i === 0
-) {
+			for (let i = 0; i < respostasComUrlValida.length; i++) {
+				if (i === 0) {
 					questionObj.answers.push(respostasComUrlValida[i]);
 				} else if (i === 1) {
 					questionObj.answers.push(respostasComUrlValida[i]);
@@ -694,19 +700,34 @@ function getInfoPage3() {
 	console.log(quizzCreated);
 }
 
-
-
 function postQuizz() {
 	let promise = axios.post(urlAPI, quizzCreated);
-	promise.then(mostrarQuizz);
+	promise.then(envioQuizzSucesso);
 	promise.catch(erroNoEnvio);
 }
 
-function mostrarQuizz(promise) {
-	console.log(promise.data)
-	console.log(promise.data.id)
+function envioQuizzSucesso(promise) {
+	console.log(`promise`);
+	console.log(`${promise}`);
+	console.log(`promise.data`);
+	console.log(promise.data); // é esse que eu quero
+	console.log('promise.data.id');
+	console.log(promise.data.id);
+
+	localUser(promise.data.id);
+}
+
+function localUser(dadosID) {
+	if (localStorage.getItem('idLocal') === null) {
+		localStorage.setItem('idLocal', '[]');
+	}
+	let dadosDesserializados = JSON.parse(localStorage.getItem('idLocal')); //transforma a string em dados de volta (array/objeto/etc)
+	dadosDesserializados.push(dadosID); // acrescenta o id do quizz que acabou de ser criado a lista puxada do localStorage
+	let dadosSerializados = JSON.stringify(dadosDesserializados); // transforma o array em string
+	localStorage.setItem('idLocal', dadosSerializados); // volta os dados para o localStorage em forma de string
 }
 
 function erroNoEnvio(erro) {
-	console.log(erro)
+	console.log(`${erro.response.status}: ${erro.response.statusText}`);
+	console.log(erro.response);
 }
