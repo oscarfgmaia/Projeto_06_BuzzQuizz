@@ -78,13 +78,15 @@ function getUserQuizzList(userIds) {
 function fillUserQuiz(promise) {
 	const object = promise.data;
 	quizzUserList.innerHTML += `
-		<li class="single-quizz" onclick="getQuizzInfo(this)" id="${object.id}" title="${object.title}">
-		    <img src=${object.image} alt="${object.title}"/>
-		    <div class="gradient-filter"></div>
-		    <span>${object.title}</span>
+		<li class="single-quizz" id="${object.id}">
+		    <div class="organize" id="${object.id}" title="${object.title}" onclick="getQuizzInfo(this)">
+				<img src=${object.image} alt="${object.title}"/>
+				<div class="gradient-filter"></div>
+				<span>${object.title}</span>
+			</div>
 			<div class="edit-quizz">
 				<span class="ionIcon" title="Edit Quizz"><ion-icon name="create-outline"></ion-icon></span>
-				<span class="ionIcon" onclick="deleteQuizz()" title="Delete Quizz"><ion-icon name="trash-outline"></ion-icon></span>
+				<span class="ionIcon" onclick="deleteQuizz(this)" title="Delete Quizz"><ion-icon name="trash-outline"></ion-icon></span>
 			</div>
 		</li>
 		`;
@@ -105,10 +107,12 @@ function fillQuizList(promise) {
 	quizzList.innerHTML = '';
 	array.forEach((i) => {
 		quizzList.innerHTML += `
-		<li class="single-quizz" onclick="getQuizzInfo(this)" id="${i.id}" title="${i.title}">
-		    <img src=${i.image} alt="${i.title}"/>
-		    <div class="gradient-filter"></div>
-		    <span>${i.title}</span>
+		<li class="single-quizz">
+			<div class="organize" id="${i.id}" title="${i.title}" onclick="getQuizzInfo(this)">
+				<img src=${i.image} alt="${i.title}"/>
+				<div class="gradient-filter"></div>
+				<span>${i.title}</span>
+			</div>
 		</li>
 		`;
 	});
@@ -121,7 +125,11 @@ function getQuizzError(error) {
 }
 
 // Deletar quizz do usuário
-function deleteQuizz() {
+function deleteQuizz(data) {
+	const singleQuizz = data.parentNode.parentNode;
+
+	console.log(singleQuizz.id);
+
 	if (confirm('Você tem certeza que deseja deletar esse quizz?') === true) {
 		console.log('confirmado');
 		window.location.reload();
@@ -132,6 +140,7 @@ function deleteQuizz() {
 
 // ir para página do quizz
 function getQuizzInfo(data) {
+	console.log(data);
 	const quizzPage = axios.get(`${urlAPI}/${data.id}`);
 	quizzUrl = data;
 
@@ -215,20 +224,16 @@ function selectAnswer(selectedData) {
 	for (let i = 0; i < answers.length; i++) {
 		if (answers[i].classList.contains('selected')) {
 			console.log(`já tem resposta selecionada em ${selectedData.parentNode.parentNode.classList}`);
-			`1.If \n Selected Answers: ${selectedAnswers} \n Right Answers: ${rightAnswers}`;
+			`\n Selected Answers: ${selectedAnswers} \n Right Answers: ${rightAnswers}`;
 			break;
 		} else {
 			selectedData.classList.add('selected');
 			selectedAnswers++;
 			for (let i1 = 0; i1 < answers.length; i1++) {
-				console.log(
-					`2.If \n Selected Answers: ${selectedAnswers} \n Right Answers: ${rightAnswers}`
-				);
+				console.log(`Selected Answers: ${selectedAnswers} \n Right Answers: ${rightAnswers}`);
 				if (selectedData.classList.contains('trueAnswer')) {
 					rightAnswers++;
-					console.log(
-						`3.If \n Selected Answers: ${selectedAnswers} \n Right Answers: ${rightAnswers}`
-					);
+					console.log(`\n Selected Answers: ${selectedAnswers} \n Right Answers: ${rightAnswers}`);
 					break;
 				}
 			}
@@ -249,9 +254,9 @@ function selectAnswer(selectedData) {
 		}
 	}
 
-	console.log(qIndex);
-	console.log(rightAnswers);
-	console.log(selectedAnswers);
+	console.log(`qIndex: ${qIndex}`);
+	console.log(`rightAnswers: ${rightAnswers}`);
+	console.log(`selectedAnswers: ${selectedAnswers}`);
 
 	if (qIndex === selectedAnswers) {
 		resultsBox.classList.remove('hidden');
