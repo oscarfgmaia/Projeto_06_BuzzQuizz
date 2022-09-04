@@ -878,10 +878,10 @@ function envioQuizzSucesso(promise) {
 	singleQuizzCreated.innerHTML = '';
 	singleQuizzCreated.innerHTML = `
 	<li class="single-quizz">
-		<div class="organize" id="${i.id}" title="${i.title}" onclick="getQuizzInfo(this)">
-			<img src=${i.image} alt="${i.title}"/>
+		<div class="organize" id="${promise.data.id}" title="${promise.data.title}" onclick="getQuizzInfo(this)">
+			<img src=${promise.data.image} alt="${promise.data.title}"/>
 			<div class="gradient-filter"></div>
-			<span>${i.title}</span>
+			<span>${promise.data.title}</span>
 		</div>
 	</li>
 	`;
