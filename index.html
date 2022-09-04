@@ -19,7 +19,7 @@
 
 	<!-- PÁGINA INICIAL -->
 	<div class="show-home"></div>
-	<main class="quizz-list-page hidden">
+	<main class="quizz-list-page">
 		<div class="create-your-quizz hidden">
 			<span>Você não criou nenhum quizz ainda :(</span>
 			<div onclick="goScreen1()">Criar Quiz</div>
@@ -54,7 +54,7 @@
 	<!-- FIM PÁGINA INICIAL -->
 
 	<!--CRIAÇÃO QUIZZ PÁGINA 1-->
-	<main class="create-quizz ">
+	<main class="create-quizz hidden">
 		<div class="user-create-quizz screen1">
 			<div class="step">Comece pelo começo</div>
 
@@ -86,14 +86,14 @@
 
 	<!--CRIAÇÃO QUIZZ PÁGINA 2-->
 
-	<main class="">
+	<main class="questions-quizz hidden">
 		<div class="user-create-quizz screen2">
 		</div>
 	</main>
 	<!--FIM QUIZZ PÁGINA 2-->
 
 	<!--CRIAÇÃO QUIZZ PÁGINA 3-->
-	<main class="">
+	<main class="levels-quizz hidden">
 		<div class="user-create-quizz screen3">
 		</div>
 	</main>
@@ -101,7 +101,7 @@
 
 
 	<!--CRIAÇÃO QUIZZ PÁGINA 4-->
-	<main class="hidden">
+	<main class="finished-quizz hidden">
 		<div class="user-create-quizz screen4">
 			<div class="step">Seu quizz está pronto!</div>
 
@@ -109,7 +109,7 @@
 					<img src="https://guiadoestudante.abril.com.br/wp-content/uploads/sites/4/2010/11/Hogwarts.jpeg?quality=100&strip=info&resize=850,567" alt="hogwarts">	
 				</div>
 
-			<div class="btn" onclick="validarStep1()">Acessar Quizz</div>
+			<div class="btn" onclick="validarStep4()">Acessar Quizz</div>
 			<div class="home" onclick="returnHome()">Voltar para home</div>
 		</div>
 	</main>

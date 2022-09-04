@@ -375,6 +375,12 @@ function validarStep2() {
 	if (array.length === quizzUserHowManyQuestions) {
 		array.forEach(qstObj => {
 			quizzCreated.questions.push(qstObj)
+			/*screen1.classList.add('hidden');
+			screen2.classList.remove('hidden');*/
+			const screen2 = document.querySelector('.questions-quizz');
+			const screen3 = screen2.nextElementSibling;
+			screen2.classList.add('hidden');
+			screen3.classList.remove('hidden');			
 		})
 	}
 	console.log(array.length)
@@ -391,6 +397,10 @@ function validarStep3() {
 	if (array.length === quizzUserHowManyLevels) {
 		array.forEach(lvlObj => {
 			quizzCreated.levels.push(lvlObj)
+			const screen3 = document.querySelector('.levels-quizz');
+			screen3.classList.add('hidden');
+			loadingPage()
+			postQuizz()
 		})
 	}
 }
@@ -794,8 +804,12 @@ function envioQuizzSucesso(promise) {
 	console.log(promise.data); // é esse que eu quero
 	console.log('promise.data.id');
 	console.log(promise.data.id);
-
+	//mostrar página 4 com opção para ir ao quizz ou voltar home
+	const screen3 = document.querySelector('.levels-quizz');
+	const screen4 = screen3.nextElementSibling;
 	localUser(promise.data.id);
+	screen4.classList.remove('hidden')
+	loadingPage()
 }
 
 function localUser(dadosID) {
@@ -809,6 +823,8 @@ function localUser(dadosID) {
 }
 
 function erroNoEnvio(erro) {
+	console.log('ERROR---- NO ENVIO ----ERROR')
 	console.log(`${erro.response.status}: ${erro.response.statusText}`);
 	console.log(erro.response);
+	loadingPage()
 }
