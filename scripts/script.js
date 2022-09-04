@@ -131,6 +131,7 @@ function deleteQuizz(data) {
 	console.log(singleQuizz.id);
 
 	if (confirm('Você tem certeza que deseja deletar esse quizz?') === true) {
+		const deleteQuizzApi = axios.delete(`${urlAPI}/${singleQuizz.id}`);
 		console.log('confirmado');
 		window.location.reload();
 	} else {
