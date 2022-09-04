@@ -638,15 +638,6 @@ function chooseQuestion(elemento) {
 	scrolltoView.scrollIntoView({ behavior: 'smooth' });
 }
 
-function verificarURL(valueURL) {
-	if (valueURL.includes('http') === true) {
-		return true;
-	} else {
-		console.log(valueURL);
-		return false;
-	}
-}
-*/
 function verificarURL(string) {
 	try {
 	 let url = new URL(string)
