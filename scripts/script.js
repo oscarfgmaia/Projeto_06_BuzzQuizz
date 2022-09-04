@@ -300,16 +300,16 @@ function validarStep1() {
 		}
 	};
 
-	let verifyURL = (valueURL) => {
-		if (valueURL.value.includes('http') === true) {
-			testesAprovados++
-			return true;
-		} else {
-			console.log(valueURL.value)
-			valueURL.style.backgroundColor = "red";
-			return false;
-		}
-	}
+	let verifyURL = (string) => {
+		try {
+		 let url = new URL(string)
+		 testesAprovados++
+		 return true
+	   } catch(err) {
+		valueURL.style.backgroundColor = "red";
+		   return false
+	   }
+	 }
 
 	let questions = () => {
 		// + na frente da string converte para inteiro ou float também
@@ -343,7 +343,7 @@ function validarStep1() {
 	title()
 	levels()
 	questions()
-	verifyURL(quizzUserUrl)
+	verifyURL(quizzUserUrl.value)
 	//	if (title() === true && verificarURL(quizzUserUrl) === true && questions() === true &&levels() === true) 
 	if (testesAprovados == 4) {
 		alert('IR PARA PRÓXIMA PÁGINA');
@@ -592,7 +592,7 @@ function chooseQuestion(elemento) {
 	scrolltoView.scrollIntoView({ behavior: "smooth" })
 }
 
-
+/*
 function verificarURL(valueURL) {
 	if (valueURL.includes('http') === true) {
 		return true;
@@ -601,6 +601,15 @@ function verificarURL(valueURL) {
 		return false;
 	}
 }
+*/
+function verificarURL(string) {
+	try {
+	 let url = new URL(string)
+	 return true
+   } catch(err) {
+	   return false
+   }
+ }
 
 function getInfoPage2(index) {
 	console.log(index);
