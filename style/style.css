@@ -33,7 +33,7 @@ ion-icon {
 .ionIcon:hover,
 .home:hover,
 .restart-quizz:hover,
-.quizzes:hover {
+.single-quizz:hover {
 	cursor: pointer;
 }
 
@@ -360,13 +360,11 @@ textarea::placeholder {
 }
 
 .img-container {
-	width: 500px;
-	height: 256px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
-.img-container img {
-	width: 100%;
-	height: 100%;
-}
+
 .screen4 .step {
 	margin-top: 70px;
 	margin-bottom: 45px;
