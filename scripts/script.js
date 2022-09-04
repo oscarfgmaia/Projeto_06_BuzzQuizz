@@ -361,27 +361,6 @@ function validarStep2() {
 	};
 }
 const perguntasData = [];
-function popularPerguntas(qtdPerguntas) {
-	for (let i = 1; i < qtdPerguntas; i++) {
-		const pagina = document.querySelector('.user-create-quizz.screen2');
-		const botao = document.querySelector('.screen2 .btn');
-		const novaPergunta = document.createElement('div');
-		novaPergunta.classList.add('container-x');
-		novaPergunta.setAttribute('id', `index-${i}`);
-		novaPergunta.innerHTML = `
-				<span class="step title">Pergunta ${i + 1}</span>
-				<span title="Editar">
-					<svg width="26" height="24" viewBox="0 0 26 24" fill="none" xmlns="http://www.w3.org/2000/svg" onclick="chooseQuestion(this)">
-						<path
-							d="M18.1594 15.4969L19.6038 14.0594C19.8295 13.8348 20.2222 13.992 20.2222 14.3155V20.8471C20.2222 22.0375 19.2517 23.0034 18.0556 23.0034H2.16667C0.970486 23.0034 0 22.0375 0 20.8471V5.03462C0 3.84419 0.970486 2.87837 2.16667 2.87837H14.5122C14.8326 2.87837 14.9951 3.2647 14.7694 3.4938L13.325 4.9313C13.2573 4.99868 13.167 5.03462 13.0677 5.03462H2.16667V20.8471H18.0556V15.7485C18.0556 15.6542 18.0917 15.5643 18.1594 15.4969ZM25.2281 6.43169L13.3747 18.2282L9.2941 18.6774C8.11146 18.8077 7.10486 17.8149 7.23576 16.629L7.68715 12.568L19.5406 0.771533C20.5743 -0.257178 22.2444 -0.257178 23.2736 0.771533L25.2236 2.71216C26.2573 3.74087 26.2573 5.40747 25.2281 6.43169ZM20.7684 7.81978L18.1458 5.20981L9.75903 13.5608L9.42951 16.4942L12.3771 16.1663L20.7684 7.81978ZM23.6934 4.2395L21.7434 2.29888C21.5583 2.1147 21.2559 2.1147 21.0753 2.29888L19.6806 3.68696L22.3031 6.29692L23.6979 4.90884C23.8785 4.72017 23.8785 4.42368 23.6934 4.2395Z"
-							fill="black" />
-					</svg>
-				</span>
-			</div>
-			`;
-		pagina.insertBefore(novaPergunta, botao);
-	}
-}
 
 function chooseQuestion(elemento) {
 	console.log('choose');
@@ -513,8 +492,7 @@ function getInfoPage2() {
 		console.log(respostasComUrlValida);
 		if (
 			respostasComUrlValida.length === respostasComConteudo.length &&
-			respostasComUrlValida.length != 0
-		) {
+			respostasComUrlValida.length > 2) {
 			for (let i = 0; i < respostasComUrlValida.length; i++) {
 				if (i === 0) {
 					questionObj.answers.push(respostasComUrlValida[i]);
@@ -613,4 +591,21 @@ function getInfoPage3() {
 		console.log('Não entrou no IF');
 	}
 	console.log(quizzCreated);
+}
+
+
+
+function postQuizz(){
+	let promise = axios.post(urlAPI,quizzCreated);
+	promise.then(mostrarQuizz);
+	promise.catch(erroNoEnvio);
+}
+
+function mostrarQuizz(promise){
+	console.log(promise.data)
+	console.log(promise.data.id)
+}
+
+function erroNoEnvio(erro){
+	console.log(erro)
 }
