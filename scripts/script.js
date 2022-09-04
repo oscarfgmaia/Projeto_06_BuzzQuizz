@@ -12,6 +12,7 @@ let qIndex = 0;
 let rightAnswers = 0;
 let selectedAnswers = 0;
 let levels;
+let createdData = 0;
 
 startPage();
 
@@ -866,6 +867,7 @@ function postQuizz() {
 }
 
 function envioQuizzSucesso(promise) {
+	createdData = promise.data;
 	const singleQuizzCreated = document.querySelector('.img-container');
 	singleQuizzCreated.innerHTML = '';
 	singleQuizzCreated.innerHTML = `
@@ -898,4 +900,10 @@ function erroNoEnvio(erro) {
 	console.log(`${erro.response.status}: ${erro.response.statusText}`);
 	console.log(erro.response);
 	loadingPage();
+}
+
+function accessCreatedQuizz() {
+	const thisPage = document.querySelector('.finished-quizz');
+	thisPage.classList.add('hidden');
+	getQuizzInfo(createdData);
 }
