@@ -210,7 +210,7 @@ header span:hover {
 .edit-quizz {
 	background-color: #ec362d;
 	width: 43px;
-	height: 87px;
+	height: fit-content;
 	border-radius: 10px 0px 0px 11px;
 	display: flex;
 	flex-direction: column;
@@ -229,14 +229,9 @@ header span:hover {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-}
 
-.edit-quizz span:last-of-type {
-	margin-bottom: 5px;
-}
-
-.edit-quizz .ionIcon {
-	z-index: 10;
+	margin: 10px;
+	z-index: 9;
 }
 
 /* ---create your quizz page--- */

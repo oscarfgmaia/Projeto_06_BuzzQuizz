@@ -7,6 +7,7 @@ const createQuizzPage = document.querySelector('.create-quizz');
 const doQuizzPage = document.querySelector('.do-quizz-page');
 const resultsBox = document.querySelector('.results-box');
 const loading = document.querySelector('.loading-page');
+const finishedQuizzPage = document.querySelector('.finished-quizz');
 let quizzUrl = {};
 let qIndex = 0;
 let rightAnswers = 0;
@@ -23,9 +24,6 @@ function resetVariables() {
 	qIndex = 0;
 	rightAnswers = 0;
 	selectedAnswers = 0;
-	console.log(qIndex);
-	console.log(rightAnswers);
-	console.log(selectedAnswers);
 }
 
 // Randomizador
@@ -59,11 +57,8 @@ function startPage() {
 		const yourQuizz = document.querySelector('.users-quizz');
 		yourQuizz.classList.remove('hidden');
 		let dadosDesserializados = JSON.parse(localStorage.getItem('idLocal')); //transforma a string em dados de volta (array/objeto/etc)
-		console.log(dadosDesserializados);
 		dadosDesserializados.forEach((id) => {
-			console.log(id);
 			getUserQuizzList(id);
-			console.log(quizzUserList.innerHTML);
 		});
 	}
 	getQuizzList();
@@ -85,13 +80,10 @@ function fillUserQuiz(promise) {
 				<span>${object.title}</span>
 			</div>
 			<div class="edit-quizz">
-				<span class="ionIcon" title="Edit Quizz"><ion-icon name="create-outline"></ion-icon></span>
 				<span class="ionIcon" onclick="deleteQuizz(this)" title="Delete Quizz"><ion-icon name="trash-outline"></ion-icon></span>
 			</div>
 		</li>
 		`;
-
-	console.log(quizzUserList.innerHTML);
 }
 
 // popular lista geral de quizzes
@@ -128,27 +120,22 @@ let a = {};
 // Deletar quizz do usuário
 function deleteQuizz(data) {
 	const singleQuizz = data.parentNode.parentNode;
-	console.log(typeof singleQuizz.id);
 	let key = deleteContentFromLocalStorage(singleQuizz.id);
 
 	if (confirm('Você tem certeza que deseja deletar esse quizz?') === true) {
 		const deleteQuizzApi = axios.delete(`${urlAPI}/${singleQuizz.id}`, {
 			headers: { 'Secret-Key': key },
 		});
-		deleteQuizzApi.then(teste1);
+		deleteQuizzApi.then(reload);
 		deleteQuizzApi.catch(teste2);
-		console.log('confirmado');
-	} else {
-		console.log('desistiu');
 	}
 }
 
-function teste1(promise) {
+function reload(promise) {
 	window.location.reload();
 }
 function teste2(error) {
-	console.log(error);
-	console.log(error.response.status);
+	console.log(`${error.response.status}:${error.response.statusText}`);
 }
 
 function deleteContentFromLocalStorage(id) {
@@ -189,7 +176,6 @@ function deleteContentFromLocalStorage(id) {
 
 // ir para página do quizz
 function getQuizzInfo(data) {
-	console.log(data);
 	const quizzPage = axios.get(`${urlAPI}/${data.id}`);
 	quizzUrl = data;
 
@@ -209,6 +195,7 @@ function goToQuizz(promise) {
 	quizzTitle.innerHTML = `${promise.data.title}`;
 	quizzImg.src = `${promise.data.image}`;
 
+	finishedQuizzPage.classList.add('hidden');
 	quizzListPage.classList.add('hidden');
 	doQuizzPage.classList.remove('hidden');
 
@@ -272,17 +259,13 @@ function selectAnswer(selectedData) {
 
 	for (let i = 0; i < answers.length; i++) {
 		if (answers[i].classList.contains('selected')) {
-			console.log(`já tem resposta selecionada em ${selectedData.parentNode.parentNode.classList}`);
-			`\n Selected Answers: ${selectedAnswers} \n Right Answers: ${rightAnswers}`;
 			break;
 		} else {
 			selectedData.classList.add('selected');
 			selectedAnswers++;
 			for (let i1 = 0; i1 < answers.length; i1++) {
-				console.log(`Selected Answers: ${selectedAnswers} \n Right Answers: ${rightAnswers}`);
 				if (selectedData.classList.contains('trueAnswer')) {
 					rightAnswers++;
-					console.log(`\n Selected Answers: ${selectedAnswers} \n Right Answers: ${rightAnswers}`);
 					break;
 				}
 			}
@@ -303,10 +286,6 @@ function selectAnswer(selectedData) {
 		}
 	}
 
-	console.log(`qIndex: ${qIndex}`);
-	console.log(`rightAnswers: ${rightAnswers}`);
-	console.log(`selectedAnswers: ${selectedAnswers}`);
-
 	if (qIndex === selectedAnswers) {
 		resultsBox.classList.remove('hidden');
 		setTimeout(showResults, 1000);
@@ -321,8 +300,6 @@ function showResults() {
 	const resultsDiv = document.querySelector('.results');
 	resultsDiv.innerHTML = '';
 	let score = Math.round((rightAnswers / qIndex) * 100);
-	console.log(score);
-	console.log(levels);
 
 	levels = levels.sort(function (a, b) {
 		if (a.minValue < b.minValue) {
@@ -357,7 +334,6 @@ function restartThisQuizz() {
 	resetVariables();
 	getQuizzInfo(quizzUrl);
 	resultsBox.classList.add('hidden');
-	console.log(resultsBox.innerHTML);
 	const quizzHeader = document.querySelector('.quizz-header');
 	quizzHeader.scrollIntoView({ block: 'start', behavior: 'smooth' });
 }
@@ -492,8 +468,6 @@ function validarStep2() {
 			screen3.classList.remove('hidden');
 		});
 	}
-	console.log(array.length);
-	console.log(quizzUserHowManyQuestions);
 }
 
 function validarStep3() {
@@ -734,7 +708,6 @@ function verificarURL(string) {
 }
 
 function getInfoPage2(index) {
-	console.log(index);
 	let quizzUserPerguntaText = document.querySelector(`.index-${index} .pergunta-texto`);
 	let quizzUserPerguntaColor = document.querySelector(`.index-${index} .pergunta-background`);
 	let quizzUserCorrectAnswer = document.querySelector(`.index-${index} .resposta-user`);
@@ -830,7 +803,6 @@ function getInfoPage2(index) {
 		if (verificarURL(elemento.image) === true) {
 			return true;
 		}
-		console.log(elemento);
 		return false;
 	}
 
@@ -942,7 +914,6 @@ function getInfoPage3(index) {
 	} else {
 		console.log('Não entrou no IF');
 	}
-	console.log(quizzCreated);
 }
 
 function postQuizz() {
@@ -970,9 +941,6 @@ function envioQuizzSucesso(promise) {
 	const screen4 = screen3.nextElementSibling;
 	screen4.classList.remove('hidden');
 	localUser(promise.data.id, 'idLocal', promise.data.key, 'keyLocal');
-	console.log('---------------------');
-	console.log(promise.data);
-	console.log(promise.data.key);
 }
 
 function localUser(dadosId, id, dadosKey, key) {
@@ -996,12 +964,10 @@ function localUser(dadosId, id, dadosKey, key) {
 function erroNoEnvio(erro) {
 	console.log('ERROR---- NO ENVIO ----ERROR');
 	console.log(`${erro.response.status}: ${erro.response.statusText}`);
-	console.log(erro.response);
 	loadingPage();
 }
 
 function accessCreatedQuizz() {
-	const thisPage = document.querySelector('.finished-quizz');
-	thisPage.classList.add('hidden');
+	finishedQuizzPage.classList.add('hidden');
 	getQuizzInfo(createdData);
 }
