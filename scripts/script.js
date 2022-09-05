@@ -79,7 +79,6 @@ function fillUserQuiz(promise) {
 				<span>${object.title}</span>
 			</div>
 			<div class="edit-quizz">
-				<span class="ionIcon" title="Edit Quizz"><ion-icon name="create-outline"></ion-icon></span>
 				<span class="ionIcon" onclick="deleteQuizz(this)" title="Delete Quizz"><ion-icon name="trash-outline"></ion-icon></span>
 			</div>
 		</li>
