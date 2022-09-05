@@ -432,7 +432,6 @@ function validarStep1() {
 	questions();
 	verifyURL(quizzUserUrl.value);
 	if (testesAprovados == 4) {
-		alert('IR PARA PRÓXIMA PÁGINA');
 		quizzCreated.title = quizzUserTitle.value;
 		quizzCreated.image = quizzUserUrl.value;
 		const screen1 = document.querySelector('.create-quizz');
@@ -467,7 +466,10 @@ function validarStep2() {
 			screen2.classList.add('hidden');
 			screen3.classList.remove('hidden');
 		});
+	}else{
+		alert('Por favor, preencha os dados corretamente.');
 	}
+	
 }
 
 function validarStep3() {
@@ -509,6 +511,8 @@ function validarStep3() {
 		screen3.classList.add('hidden');
 		postQuizz();
 		loadingPage();
+	}else{
+		alert('Por favor, preencha os dados corretamente.');
 	}
 }
 
