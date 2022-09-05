@@ -52,7 +52,7 @@ function goScreen1() {
 
 function startPage() {
 	loadingPage();
-	if (localStorage.getItem('idLocal') === null) {
+	if (localStorage.getItem('idLocal') === null || localStorage.getItem('idLocal') === '[]') {
 		const createYourQuizz = document.querySelector('.create-your-quizz');
 		createYourQuizz.classList.remove('hidden');
 	} else {
@@ -124,19 +124,67 @@ function getQuizzError(error) {
 	loadingPage();
 }
 
+let a ={
+
+}
 // Deletar quizz do usuário
 function deleteQuizz(data) {
 	const singleQuizz = data.parentNode.parentNode;
-
-	console.log(singleQuizz.id);
+	console.log(typeof(singleQuizz.id));
+	let key = deleteContentFromLocalStorage(singleQuizz.id)
 
 	if (confirm('Você tem certeza que deseja deletar esse quizz?') === true) {
-		const deleteQuizzApi = axios.delete(`${urlAPI}/${singleQuizz.id}`);
+		const deleteQuizzApi = axios.delete(`${urlAPI}/${singleQuizz.id}`,{headers:{"Secret-Key":key}});
+		deleteQuizzApi.then(teste1)
+		deleteQuizzApi.catch(teste2)
 		console.log('confirmado');
-		window.location.reload();
 	} else {
 		console.log('desistiu');
 	}
+}
+
+function teste1(promise){
+	window.location.reload()
+}
+function teste2(error){
+	console.log(error)
+	console.log(error.response.status)
+}
+
+function deleteContentFromLocalStorage(id){
+	let idsFromStorage = localStorage.idLocal;
+	let keysFromStorage = localStorage.keyLocal;
+	let idNumber = +id;
+	//transfromar em array
+	idsFromStorage = JSON.parse(idsFromStorage)
+	keysFromStorage = JSON.parse(keysFromStorage)
+
+	let counter = 0;
+	let index;
+	let filteredId = idsFromStorage.filter((element)=>{
+		if(element === idNumber){
+			index = counter;
+			return false
+		}
+		counter++;
+		return true
+	})
+
+	let filteredKey = keysFromStorage.filter((element)=>{
+		if(element === keysFromStorage[index]){
+			return false
+		}
+		return true
+	})
+
+	filteredId = JSON.stringify(filteredId)
+	localStorage.setItem('idLocal',filteredId)
+
+	filteredKey = JSON.stringify(filteredKey)
+	localStorage.setItem('keyLocal',filteredKey)
+
+	let key = keysFromStorage[index]
+	return key.toString()
 }
 
 // ir para página do quizz
@@ -447,11 +495,11 @@ function validarStep3() {
 	if (array.length === quizzUserHowManyLevels) {
 		array.forEach((lvlObj) => {
 			quizzCreated.levels.push(lvlObj);
-			const screen3 = document.querySelector('.levels-quizz');
-			screen3.classList.add('hidden');
-			postQuizz();
-			loadingPage();
 		});
+		const screen3 = document.querySelector('.levels-quizz');
+		screen3.classList.add('hidden');
+		postQuizz();
+		loadingPage();
 	}
 }
 
@@ -552,7 +600,29 @@ function popularLevels(qtdLevels) {
 	pagina3.innerHTML = `<div class="step">Agora, decida os níveis!</div>`;
 
 	for (let i = 0; i < quizzUserHowManyLevels; i++) {
-		pagina3.innerHTML += `
+		if (i === 0) {
+			pagina3.innerHTML += `
+			<div class="perguntas pagina3 index-${i}">
+				<span class="step title">Nível ${i + 1}</span>
+				<ul class="pergunta-ul">
+					<li>
+						<input class="nivel-title" type="text" name="nivel-title" id="nivel-title" placeholder="Título do nível" />
+					</li>
+					<li>
+						<input class="percentage" type="text" name="percentage" id="percentage" placeholder="% de acerto mínima" disabled value="0"/>
+					</li>
+					<li>
+						<input class="url-nivel" type="text" name="url-nivel" id="url-nivel" placeholder="URL da imagem do nível" />
+					</li>
+					<li>
+						<textarea class="description-nivel" name="description-nivel" id="description-nivel"
+							placeholder="Descrição do nível"></textarea>
+					</li>
+				</ul>
+			</div>
+		`;
+		} else {
+			pagina3.innerHTML += `
 			<div class="perguntas pagina3 index-${i}">
 				<span class="step title">Nível ${i + 1}</span>
 				<ul class="pergunta-ul">
@@ -572,6 +642,7 @@ function popularLevels(qtdLevels) {
 				</ul>
 			</div>
 		`;
+		}
 	}
 	pagina3.innerHTML += '<div class="btn" onclick="validarStep3()">Finalizar Quizz</div>';
 	for (let i = 0; i < qtdLevels; i++) {
@@ -890,18 +961,31 @@ function envioQuizzSucesso(promise) {
 	const screen3 = document.querySelector('.levels-quizz');
 	const screen4 = screen3.nextElementSibling;
 	screen4.classList.remove('hidden');
-	localUser(promise.data.id);
+	localUser(promise.data.id,'idLocal',promise.data.key,'keyLocal')
+	console.log('---------------------')
+	console.log(promise.data)
+	console.log(promise.data.key)
 }
 
-function localUser(dadosID) {
-	if (localStorage.getItem('idLocal') === null) {
-		localStorage.setItem('idLocal', '[]');
+function localUser(dadosId,id,dadosKey,key) {
+	if (localStorage.getItem(id) === null) {
+		localStorage.setItem(id, '[]');
 	}
-	let dadosDesserializados = JSON.parse(localStorage.getItem('idLocal')); //transforma a string em dados de volta (array/objeto/etc)
-	dadosDesserializados.push(dadosID); // acrescenta o id do quizz que acabou de ser criado a lista puxada do localStorage
+	let dadosDesserializados = JSON.parse(localStorage.getItem(id)); //transforma a string em dados de volta (array/objeto/etc)
+	dadosDesserializados.push(dadosId); // acrescenta o id do quizz que acabou de ser criado a lista puxada do localStorage
 	let dadosSerializados = JSON.stringify(dadosDesserializados); // transforma o array em string
-	localStorage.setItem('idLocal', dadosSerializados); // volta os dados para o localStorage em forma de string
+	localStorage.setItem(id, dadosSerializados); // volta os dados para o localStorage em forma de string
+
+
+	if (localStorage.getItem(key) === null) {
+		localStorage.setItem(key, '[]');
+	}
+	let dadosDesserializadosKey = JSON.parse(localStorage.getItem(key)); //transforma a string em dados de volta (array/objeto/etc)
+	dadosDesserializadosKey.push(dadosKey); // acrescenta o id do quizz que acabou de ser criado a lista puxada do localStorage
+	let dadosSerializadosKey = JSON.stringify(dadosDesserializadosKey); // transforma o array em string
+	localStorage.setItem(key, dadosSerializadosKey); // volta os dados para o localStorage em forma de string
 }
+
 
 function erroNoEnvio(erro) {
 	console.log('ERROR---- NO ENVIO ----ERROR');
