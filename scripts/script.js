@@ -7,6 +7,7 @@ const createQuizzPage = document.querySelector('.create-quizz');
 const doQuizzPage = document.querySelector('.do-quizz-page');
 const resultsBox = document.querySelector('.results-box');
 const loading = document.querySelector('.loading-page');
+const finishedQuizzPage = document.querySelector('.finished-quizz');
 let quizzUrl = {};
 let qIndex = 0;
 let rightAnswers = 0;
@@ -194,6 +195,7 @@ function goToQuizz(promise) {
 	quizzTitle.innerHTML = `${promise.data.title}`;
 	quizzImg.src = `${promise.data.image}`;
 
+	finishedQuizzPage.classList.add('hidden');
 	quizzListPage.classList.add('hidden');
 	doQuizzPage.classList.remove('hidden');
 
@@ -970,7 +972,6 @@ function erroNoEnvio(erro) {
 }
 
 function accessCreatedQuizz() {
-	const thisPage = document.querySelector('.finished-quizz');
-	thisPage.classList.add('hidden');
+	finishedQuizzPage.classList.add('hidden');
 	getQuizzInfo(createdData);
 }
