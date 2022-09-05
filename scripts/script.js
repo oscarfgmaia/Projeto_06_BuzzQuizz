@@ -124,67 +124,67 @@ function getQuizzError(error) {
 	loadingPage();
 }
 
-let a ={
-
-}
+let a = {};
 // Deletar quizz do usuário
 function deleteQuizz(data) {
 	const singleQuizz = data.parentNode.parentNode;
-	console.log(typeof(singleQuizz.id));
-	let key = deleteContentFromLocalStorage(singleQuizz.id)
+	console.log(typeof singleQuizz.id);
+	let key = deleteContentFromLocalStorage(singleQuizz.id);
 
 	if (confirm('Você tem certeza que deseja deletar esse quizz?') === true) {
-		const deleteQuizzApi = axios.delete(`${urlAPI}/${singleQuizz.id}`,{headers:{"Secret-Key":key}});
-		deleteQuizzApi.then(teste1)
-		deleteQuizzApi.catch(teste2)
+		const deleteQuizzApi = axios.delete(`${urlAPI}/${singleQuizz.id}`, {
+			headers: { 'Secret-Key': key },
+		});
+		deleteQuizzApi.then(teste1);
+		deleteQuizzApi.catch(teste2);
 		console.log('confirmado');
 	} else {
 		console.log('desistiu');
 	}
 }
 
-function teste1(promise){
-	window.location.reload()
+function teste1(promise) {
+	window.location.reload();
 }
-function teste2(error){
-	console.log(error)
-	console.log(error.response.status)
+function teste2(error) {
+	console.log(error);
+	console.log(error.response.status);
 }
 
-function deleteContentFromLocalStorage(id){
+function deleteContentFromLocalStorage(id) {
 	let idsFromStorage = localStorage.idLocal;
 	let keysFromStorage = localStorage.keyLocal;
 	let idNumber = +id;
 	//transfromar em array
-	idsFromStorage = JSON.parse(idsFromStorage)
-	keysFromStorage = JSON.parse(keysFromStorage)
+	idsFromStorage = JSON.parse(idsFromStorage);
+	keysFromStorage = JSON.parse(keysFromStorage);
 
 	let counter = 0;
 	let index;
-	let filteredId = idsFromStorage.filter((element)=>{
-		if(element === idNumber){
+	let filteredId = idsFromStorage.filter((element) => {
+		if (element === idNumber) {
 			index = counter;
-			return false
+			return false;
 		}
 		counter++;
-		return true
-	})
+		return true;
+	});
 
-	let filteredKey = keysFromStorage.filter((element)=>{
-		if(element === keysFromStorage[index]){
-			return false
+	let filteredKey = keysFromStorage.filter((element) => {
+		if (element === keysFromStorage[index]) {
+			return false;
 		}
-		return true
-	})
+		return true;
+	});
 
-	filteredId = JSON.stringify(filteredId)
-	localStorage.setItem('idLocal',filteredId)
+	filteredId = JSON.stringify(filteredId);
+	localStorage.setItem('idLocal', filteredId);
 
-	filteredKey = JSON.stringify(filteredKey)
-	localStorage.setItem('keyLocal',filteredKey)
+	filteredKey = JSON.stringify(filteredKey);
+	localStorage.setItem('keyLocal', filteredKey);
 
-	let key = keysFromStorage[index]
-	return key.toString()
+	let key = keysFromStorage[index];
+	return key.toString();
 }
 
 // ir para página do quizz
@@ -324,8 +324,19 @@ function showResults() {
 	console.log(score);
 	console.log(levels);
 
+	levels = levels.sort(function (a, b) {
+		if (a.minValue < b.minValue) {
+			return 1;
+		}
+		if (a.minValue > b.minValue) {
+			return -1;
+		}
+		// a must be equal to b
+		return 0;
+	});
+
 	for (let i = 0; i < levels.length; i++) {
-		if (score <= levels[i].minValue) {
+		if (score >= levels[i].minValue) {
 			resultsDiv.innerHTML = `
 			<div class="results-header">
 				<p>Você acertou ${score}%: ${levels[i].minValue}</p>
@@ -962,13 +973,13 @@ function envioQuizzSucesso(promise) {
 	const screen3 = document.querySelector('.levels-quizz');
 	const screen4 = screen3.nextElementSibling;
 	screen4.classList.remove('hidden');
-	localUser(promise.data.id,'idLocal',promise.data.key,'keyLocal')
-	console.log('---------------------')
-	console.log(promise.data)
-	console.log(promise.data.key)
+	localUser(promise.data.id, 'idLocal', promise.data.key, 'keyLocal');
+	console.log('---------------------');
+	console.log(promise.data);
+	console.log(promise.data.key);
 }
 
-function localUser(dadosId,id,dadosKey,key) {
+function localUser(dadosId, id, dadosKey, key) {
 	if (localStorage.getItem(id) === null) {
 		localStorage.setItem(id, '[]');
 	}
@@ -976,7 +987,6 @@ function localUser(dadosId,id,dadosKey,key) {
 	dadosDesserializados.push(dadosId); // acrescenta o id do quizz que acabou de ser criado a lista puxada do localStorage
 	let dadosSerializados = JSON.stringify(dadosDesserializados); // transforma o array em string
 	localStorage.setItem(id, dadosSerializados); // volta os dados para o localStorage em forma de string
-
 
 	if (localStorage.getItem(key) === null) {
 		localStorage.setItem(key, '[]');
@@ -986,7 +996,6 @@ function localUser(dadosId,id,dadosKey,key) {
 	let dadosSerializadosKey = JSON.stringify(dadosDesserializadosKey); // transforma o array em string
 	localStorage.setItem(key, dadosSerializadosKey); // volta os dados para o localStorage em forma de string
 }
-
 
 function erroNoEnvio(erro) {
 	console.log('ERROR---- NO ENVIO ----ERROR');
