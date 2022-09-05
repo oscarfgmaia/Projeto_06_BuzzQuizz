@@ -349,18 +349,6 @@ function returnHome() {
 	window.location.reload();
 }
 
-// // mostrar número de caracteres no input (colocar no input ou textarea onkeyup="showChars(this)")
-
-// function showChars(num) {
-// 	console.log(num.value.length);
-// }
-
-// // mostrar número de caracteres no input (colocar no input ou textarea onkeyup="showChars(this)")
-
-// function showChars(num) {
-// 	console.log(num.value.length);
-// }
-
 // validação criação quizz step1
 
 let quizzCreated = {
@@ -535,20 +523,24 @@ function popularPerguntas(qtdPerguntas) {
 			<ul class="pergunta-ul">
 				<li>
 					<input class="pergunta-texto" type="text" name="pergunta-texo" id="pergunta-texto" placeholder="Texto da pergunta" />
+					<span class="hidden">O texto da pergunta deve ter no mínimo 20 caracteres</span>
 				</li>
 				<li>
 					<input class="pergunta-background" type="text" name="pergunta-background" id="pergunta-background"
 						placeholder="Cor de fundo da pergunta" />
+					<span class="hidden">A cor deve estar no formato hexadecimal (ex: #9a202f)</span>
 				</li>
 			</ul>
 			<span class="step title resposta-correta">Resposta correta</span>
 			<ul class="pergunta-ul">
 				<li>
 					<input class="resposta-user" type="text" name="resposta-user" id="resposta-user" placeholder="Resposta correta" />
+					<span class="hidden">O texto da resposta não pode estar vazio</span>
 				</li>
 				<li>
 					<input class="url-resposta-quizz-user" type="text" name="url-resposta-quizz-user" id="url-resposta-quizz-user"
 						placeholder="URL da imagem" />
+					<span class="hidden">O valor informado não é uma URL válida</span>
 				</li>
 			</ul>
 			<span class="step title resposta-incorreta">Respostas incorretas</span>
@@ -556,28 +548,34 @@ function popularPerguntas(qtdPerguntas) {
 				<li>
 					<input class="wrong-answer-1" type="text" name="wrong-answer 1" id="wrong-answer-1"
 						placeholder="Resposta incorreta 1" />
+					<span class="hidden">O texto da resposta não pode estar vazio</span>
 				</li>
 				<li>
 					<input class="wrong-answer-url-1" type="text" name="wrong-answer-url 1" id="wrong-answer-url-1"
 						placeholder="URL da imagem 1" />
+					<span class="hidden">O valor informado não é uma URL válida</span>
 				</li>
 
 				<li>
 					<input class="wrong-answer-2" type="text" name="wrong-answer 2" id="wrong-answer-2"
 						placeholder="Resposta incorreta 2" />
+					<span class="hidden">O texto da resposta não pode estar vazio</span>
 				</li>
 				<li>
 					<input class="wrong-answer-url-2" type="text" name="wrong-answer-url 2" id="wrong-answer-url-2"
 						placeholder="URL da imagem 2" />
+					<span class="hidden">O valor informado não é uma URL válida</span>
 				</li>
 
 				<li>
 					<input class="wrong-answer-3" type="text" name="wrong-answer 3" id="wrong-answer-3"
 						placeholder="Resposta incorreta 3" />
+					<span class="hidden">O texto da resposta não pode estar vazio</span>
 				</li>
 				<li>
 					<input class="wrong-answer-url-3" type="text" name="wrong-answer-url-3" id="wrong-answer-url-3"
 						placeholder="URL da imagem 3" />
+					<span class="hidden">O valor informado não é uma URL válida</span>
 				</li>
 			</ul>
 		</div>
@@ -628,16 +626,20 @@ function popularLevels(qtdLevels) {
 				<ul class="pergunta-ul">
 					<li>
 						<input class="nivel-title" type="text" name="nivel-title" id="nivel-title" placeholder="Título do nível" />
+						<span class="hidden">O título do nível deve ter no mínimo 10 caracteres</span>
 					</li>
 					<li>
 						<input class="percentage" type="text" name="percentage" id="percentage" placeholder="% de acerto mínima" />
+						<span class="hidden">O valor deve estar entre 0 e 100, não pode conter níveis com valores iguais e o valor 0 deve existir</span>
 					</li>
 					<li>
 						<input class="url-nivel" type="text" name="url-nivel" id="url-nivel" placeholder="URL da imagem do nível" />
+						<span class="hidden">O valor informado não é uma URL válida</span>
 					</li>
 					<li>
 						<textarea class="description-nivel" name="description-nivel" id="description-nivel"
 							placeholder="Descrição do nível"></textarea>
+						<span class="hidden">A descrição do nível deve conter pelo menos 30 caracteres</span>
 					</li>
 				</ul>
 			</div>
@@ -730,6 +732,8 @@ function getInfoPage2(index) {
 	let quizzUserIncorrectAnswer2Url = document.querySelector(`.index-${index} .wrong-answer-url-2`);
 	let quizzUserIncorrectAnswer3 = document.querySelector(`.index-${index} .wrong-answer-3`);
 	let quizzUserIncorrectAnswer3Url = document.querySelector(`.index-${index} .wrong-answer-url-3`);
+
+	let contador1 = 0;
 
 	let possibilidadeRespostas = [
 		{
@@ -841,27 +845,49 @@ function getInfoPage2(index) {
 					questionObj.answers.push(respostasComUrlValida[i]);
 				} else if (i === 3) {
 					questionObj.answers.push(respostasComUrlValida[i]);
-				} else {
-					console.log('tem coisa errada');
 				}
 			}
 			return questionObj;
 		} else {
-			console.log('tem coisa errada - validação respostas');
+			quizzUserCorrectAnswer.classList.add('show-error');
+			quizzUserCorrectUrl.classList.add('show-error');
+			quizzUserCorrectAnswer.nextElementSibling.classList.remove('hidden');
+			quizzUserCorrectUrl.nextElementSibling.classList.remove('hidden');
+			quizzUserIncorrectAnswer1.classList.add('show-error');
+			quizzUserIncorrectAnswer1Url.classList.add('show-error');
+			quizzUserIncorrectAnswer1.nextElementSibling.classList.remove('hidden');
+			quizzUserIncorrectAnswer1Url.nextElementSibling.classList.remove('hidden');
+			if (respostasComConteudo.length === 3) {
+				quizzUserIncorrectAnswer2.classList.add('show-error');
+				quizzUserIncorrectAnswer2Url.classList.add('show-error');
+				quizzUserIncorrectAnswer2.nextElementSibling.classList.remove('hidden');
+				quizzUserIncorrectAnswer2Url.nextElementSibling.classList.remove('hidden');
+			} else if (respostasComConteudo.length === 4) {
+				quizzUserIncorrectAnswer3.classList.add('show-error');
+				quizzUserIncorrectAnswer3Url.classList.add('show-error');
+				quizzUserIncorrectAnswer3.nextElementSibling.classList.remove('hidden');
+				quizzUserIncorrectAnswer3Url.nextElementSibling.classList.remove('hidden');
+			}
 			return false;
 		}
 	} else {
-		console.log('tem coisa errada - validação titulo');
+		const errorColor = document.querySelector(`.pagina2.index-${index} .pergunta-background`);
+		errorColor.classList.add('show-error');
+		errorColor.nextElementSibling.classList.remove('hidden');
+		const errorPergunta = document.querySelector(`.pagina2.index-${index} .pergunta-texto`);
+		errorPergunta.classList.add('show-error');
+		errorPergunta.nextElementSibling.classList.remove('hidden');
 		return false;
 	}
 }
 
 function getInfoPage3(index) {
-	console.log('get info 3');
 	let quizzUserLevelTitle = document.querySelector(`.index-${index} .nivel-title`);
 	let quizzUserLevelPercentage = document.querySelector(`.index-${index} .percentage`);
 	let quizzUserLevelUrl = document.querySelector(`.index-${index} .url-nivel`);
 	let quizzUserLevelDescription = document.querySelector(`.index-${index} .description-nivel`);
+
+	let contador2 = 0;
 
 	let lvlObj = {
 		title: '',
@@ -879,10 +905,11 @@ function getInfoPage3(index) {
 
 	let titleLevel = () => {
 		if (quizzUserLevelTitle.value.length >= 10) {
-			console.log('title ok');
+			contador2++;
 			return true;
 		} else {
-			console.log('title failed');
+			quizzUserLevelTitle.classList.add('show-error');
+			quizzUserLevelTitle.nextElementSibling.classList.remove('hidden');
 			return false;
 		}
 	};
@@ -893,43 +920,47 @@ function getInfoPage3(index) {
 			teste = +teste;
 			if (teste >= 0 && teste <= 100) {
 				lvlObj.minValue = teste;
+				contador2++;
 				return true;
 			} else {
-				console.log('% FAILED');
+				quizzUserLevelPercentage.classList.add('show-error');
+				quizzUserLevelPercentage.nextElementSibling.classList.remove('hidden');
 				return false;
 			}
 		}
+		quizzUserLevelPercentage.classList.add('show-error');
+		quizzUserLevelPercentage.nextElementSibling.classList.remove('hidden');
 		return false;
 	};
 
 	let descriptionLevel = () => {
 		if (quizzUserLevelDescription.value.length >= 30) {
-			console.log('DESCRIPTION ok');
+			contador2++;
 			return true;
 		} else {
-			console.log('descrpt failed');
+			quizzUserLevelDescription.classList.add('show-error');
+			quizzUserLevelDescription.nextElementSibling.classList.remove('hidden');
 			return false;
 		}
 	};
 	function urlValida(element) {
 		if (verificarURL(element.image) === true) {
-			console.log('URL ok');
+			contador2++;
 			return true;
 		}
+		quizzUserLevelUrl.classList.add('show-error');
+		quizzUserLevelUrl.nextElementSibling.classList.remove('hidden');
 		return false;
 	}
 
 	setarInputs();
-	if (
-		titleLevel() === true &&
-		percentageLevel() === true &&
-		urlValida(lvlObj) === true &&
-		descriptionLevel() === true
-	) {
-		console.log('ENTROU NO IF');
+	titleLevel();
+	urlValida(lvlObj);
+	percentageLevel();
+	descriptionLevel();
+
+	if (contador2 === 4) {
 		return lvlObj;
-	} else {
-		console.log('Não entrou no IF');
 	}
 }
 
@@ -979,7 +1010,6 @@ function localUser(dadosId, id, dadosKey, key) {
 }
 
 function erroNoEnvio(erro) {
-	console.log('ERROR---- NO ENVIO ----ERROR');
 	console.log(`${erro.response.status}: ${erro.response.statusText}`);
 	loadingPage();
 }
