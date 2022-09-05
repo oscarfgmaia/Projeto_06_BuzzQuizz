@@ -21,23 +21,23 @@
 	<main class="quizz-list-page">
 		<div class="create-your-quizz hidden">
 			<span>Você não criou nenhum quizz ainda :(</span>
-			<div onclick="goScreen1()">Criar Quiz</div>
+			<div onclick="goScreen1()" data-identifier="create-quizz">Criar Quiz</div>
 		</div>
 
 		<div class="users-quizz hidden">
 			<div class="user-quizz-header">
 				<span>Seus Quizzes</span>
-				<span class="ionIcon" onclick="goScreen1()" title="Create Quizz">
+				<span class="ionIcon" onclick="goScreen1()" title="Create Quizz" data-identifier="create-quizz">
 					<ion-icon name="add-circle"></ion-icon>
 				</span>
 			</div>
 
-			<ul class="quizzes user"></ul>
+			<ul class="quizzes user" data-identifier="user-quizzes"></ul>
 		</div>
 
-		<div class="all-quizz">
+		<div class="all-quizz" >
 			<span class="hidden">Todos os Quizzes</span>
-			<ul class="quizzes"></ul>
+			<ul class="quizzes" data-identifier="general-quizzes"></ul>
 		</div>
 	</main>
 	<!-- FIM PÁGINA INICIAL -->
@@ -125,8 +125,8 @@
 			</li>
 		</ul>
 
-		<div class="results-box hidden">
-			<div class="results"></div>
+		<div class="results-box hidden" >
+			<div class="results" data-identifier="quizz-result"></div>
 			<div class="restart-quizz" onclick="restartThisQuizz()">Reiniciar Quizz</div>
 			<div class="home" onclick="returnHome()">Voltar para home</div>
 		<div class="results-box">

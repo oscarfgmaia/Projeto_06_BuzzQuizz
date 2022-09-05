@@ -73,7 +73,7 @@ function getUserQuizzList(userIds) {
 function fillUserQuiz(promise) {
 	const object = promise.data;
 	quizzUserList.innerHTML += `
-		<li class="single-quizz" id="${object.id}">
+		<li class="single-quizz" id="${object.id}" data-identifier="quizz-card">
 		    <div class="organize" id="${object.id}" title="${object.title}" onclick="getQuizzInfo(this)">
 				<img src=${object.image} alt="${object.title}"/>
 				<div class="gradient-filter"></div>
@@ -101,7 +101,7 @@ function fillQuizList(promise) {
 	quizzList.innerHTML = '';
 	array.forEach((i) => {
 		quizzList.innerHTML += `
-		<li class="single-quizz">
+		<li class="single-quizz" data-identifier="quizz-card">
 			<div class="organize" id="${i.id}" title="${i.title}" onclick="getQuizzInfo(this)">
 				<img src=${i.image} alt="${i.title}"/>
 				<div class="gradient-filter"></div>
@@ -214,11 +214,11 @@ function fillQuestions(questions) {
 	qIndex = 0;
 	questions.forEach((question) => {
 		questionList.innerHTML += `
-			<li class="question q${qIndex}">
+			<li class="question q${qIndex}" data-identifier="question">
 				<div class="question-header" style="background-color: ${question.color}">
 					<span>${question.title}</span>
 				</div>
-				<ul class="answers">
+				<ul class="answers" data-identifier="answer">
 					<li class="">
 						<img src="" alt="couldn't load image" />
 						<div class="light-filter hidden"></div>
@@ -387,7 +387,7 @@ function validarStep1() {
 			testesAprovados++;
 			return true;
 		} else {
-			quizzUserTitle.style.backgroundColor = 'red';
+			quizzUserTitle.classList.add('show-error');
 			return false;
 		}
 	};
@@ -398,7 +398,7 @@ function validarStep1() {
 			testesAprovados++;
 			return true;
 		} catch (err) {
-			valueURL.style.backgroundColor = 'red';
+			// valueURL.classList.add('show-error');
 			return false;
 		}
 	};
@@ -412,7 +412,7 @@ function validarStep1() {
 			quizzUserHowManyQuestions = input;
 			return true;
 		} else {
-			quizzUserHowManyQuestions.style.backgroundColor = 'red';
+			quizzUserHowManyQuestions.classList.add('show-error');
 			return false;
 		}
 	};
@@ -426,7 +426,7 @@ function validarStep1() {
 			quizzUserHowManyLevels = input;
 			return true;
 		} else {
-			quizzUserHowManyLevels.style.backgroundColor = 'red';
+			quizzUserHowManyLevels.classList.add('show-error');
 			return false;
 		}
 	};

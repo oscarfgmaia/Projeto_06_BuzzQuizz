@@ -143,6 +143,7 @@ header span:hover {
 }
 
 .single-quizz {
+	min-width: 340px;
 	width: 340px;
 	height: 181px;
 	border-radius: 5px;
