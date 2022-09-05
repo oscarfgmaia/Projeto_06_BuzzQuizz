@@ -316,7 +316,7 @@ function showResults() {
 		if (score >= levels[i].minValue) {
 			resultsDiv.innerHTML = `
 			<div class="results-header">
-				<p>Você acertou ${score}%: ${levels[i].minValue}</p>
+				<p>Você acertou ${score}%: ${levels[i].title}</p>
 			</div>
 			<div class="results-description">
 				<img src=${levels[i].image} alt="${levels[i].text}" />
@@ -466,16 +466,15 @@ function validarStep2() {
 			screen2.classList.add('hidden');
 			screen3.classList.remove('hidden');
 		});
-	}else{
+	} else {
 		alert('Por favor, preencha os dados corretamente.');
 	}
-	
 }
 
 function validarStep3() {
 	let array = [];
 	let validado0 = 0;
-	let validadoIgualdade = 0
+	let validadoIgualdade = 0;
 	for (let i = 0; i < quizzUserHowManyLevels; i++) {
 		if (typeof getInfoPage3(i) === 'object') {
 			array.push(getInfoPage3(i));
@@ -483,7 +482,7 @@ function validarStep3() {
 	}
 	for (let i = 0; i < array.length; i++) {
 		if (array[i].minValue === 0) {
-			validado0++
+			validado0++;
 		}
 	}
 
@@ -498,9 +497,9 @@ function validarStep3() {
 		return 0;
 	});
 
-	for (let i = 0; i < (array.length - 1); i++) {
+	for (let i = 0; i < array.length - 1; i++) {
 		if (array[i].minValue === array[i + 1].minValue) {
-			validadoIgualdade++
+			validadoIgualdade++;
 		}
 	}
 	if (array.length === quizzUserHowManyLevels && validado0 === 1 && validadoIgualdade === 0) {
@@ -511,7 +510,7 @@ function validarStep3() {
 		screen3.classList.add('hidden');
 		postQuizz();
 		loadingPage();
-	}else{
+	} else {
 		alert('Por favor, preencha os dados corretamente.');
 	}
 }
@@ -912,7 +911,12 @@ function getInfoPage3(index) {
 	}
 
 	setarInputs();
-	if (titleLevel() === true && percentageLevel() === true && urlValida(lvlObj) === true && descriptionLevel() === true) {
+	if (
+		titleLevel() === true &&
+		percentageLevel() === true &&
+		urlValida(lvlObj) === true &&
+		descriptionLevel() === true
+	) {
 		console.log('ENTROU NO IF');
 		return lvlObj;
 	} else {
