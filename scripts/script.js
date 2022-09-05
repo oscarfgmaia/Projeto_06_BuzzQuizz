@@ -95,6 +95,8 @@ function getQuizzList() {
 }
 
 function fillQuizList(promise) {
+	const allQuizzHeader = document.querySelector('.all-quizz span');
+	allQuizzHeader.classList.remove('hidden');
 	const array = promise.data;
 	quizzList.innerHTML = '';
 	array.forEach((i) => {
