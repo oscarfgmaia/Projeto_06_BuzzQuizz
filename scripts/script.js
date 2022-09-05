@@ -832,7 +832,10 @@ function getInfoPage2(index) {
 
 		const respostasComUrlValida = respostasComConteudo.filter(urlValida);
 
-		if (respostasComUrlValida.length === respostasComConteudo.length && respostasComUrlValida.length >= 2) {
+		if (
+			respostasComUrlValida.length === respostasComConteudo.length &&
+			respostasComUrlValida.length >= 2
+		) {
 			for (let i = 0; i < respostasComUrlValida.length; i++) {
 				if (i === 0) {
 					questionObj.answers.push(respostasComUrlValida[i]);
