@@ -455,7 +455,6 @@ function validarStep1() {
 	levels();
 	questions();
 	verifyURL(quizzUserUrl.value);
-	//	if (title() === true && verificarURL(quizzUserUrl) === true && questions() === true &&levels() === true)
 	if (testesAprovados == 4) {
 		alert('IR PARA PRÓXIMA PÁGINA');
 		quizzCreated.title = quizzUserTitle.value;
@@ -499,12 +498,36 @@ function validarStep2() {
 
 function validarStep3() {
 	let array = [];
+	let validado0 = 0;
+	let validadoIgualdade = 0
 	for (let i = 0; i < quizzUserHowManyLevels; i++) {
 		if (typeof getInfoPage3(i) === 'object') {
 			array.push(getInfoPage3(i));
 		}
 	}
-	if (array.length === quizzUserHowManyLevels) {
+	for (let i = 0; i < array.length; i++) {
+		if (array[i].minValue === 0) {
+			validado0++
+		}
+	}
+
+	array = array.sort(function (a, b) {
+		if (a.minValue < b.minValue) {
+			return 1;
+		}
+		if (a.minValue > b.minValue) {
+			return -1;
+		}
+		// a must be equal to b
+		return 0;
+	});
+
+	for (let i = 0; i < (array.length - 1); i++) {
+		if (array[i].minValue === array[i + 1].minValue) {
+			validadoIgualdade++
+		}
+	}
+	if (array.length === quizzUserHowManyLevels && validado0 === 1 && validadoIgualdade === 0) {
 		array.forEach((lvlObj) => {
 			quizzCreated.levels.push(lvlObj);
 		});
@@ -612,28 +635,7 @@ function popularLevels(qtdLevels) {
 	pagina3.innerHTML = `<div class="step">Agora, decida os níveis!</div>`;
 
 	for (let i = 0; i < quizzUserHowManyLevels; i++) {
-		if (i === 0) {
-			pagina3.innerHTML += `
-			<div class="perguntas pagina3 index-${i}">
-				<span class="step title">Nível ${i + 1}</span>
-				<ul class="pergunta-ul">
-					<li>
-						<input class="nivel-title" type="text" name="nivel-title" id="nivel-title" placeholder="Título do nível" />
-					</li>
-					<li>
-						<input class="percentage" type="text" name="percentage" id="percentage" placeholder="% de acerto mínima" disabled value="0"/>
-					</li>
-					<li>
-						<input class="url-nivel" type="text" name="url-nivel" id="url-nivel" placeholder="URL da imagem do nível" />
-					</li>
-					<li>
-						<textarea class="description-nivel" name="description-nivel" id="description-nivel"
-							placeholder="Descrição do nível"></textarea>
-					</li>
-				</ul>
-			</div>
-		`;
-		} else {
+		{
 			pagina3.innerHTML += `
 			<div class="perguntas pagina3 index-${i}">
 				<span class="step title">Nível ${i + 1}</span>
@@ -934,15 +936,9 @@ function getInfoPage3(index) {
 	}
 
 	setarInputs();
-	if (
-		titleLevel() === true &&
-		percentageLevel() === true &&
-		urlValida(lvlObj) &&
-		descriptionLevel() === true
-	) {
+	if (titleLevel() === true && percentageLevel() === true && urlValida(lvlObj) === true && descriptionLevel() === true) {
 		console.log('ENTROU NO IF');
 		return lvlObj;
-		quizzCreated.levels.push(lvlObj);
 	} else {
 		console.log('Não entrou no IF');
 	}
