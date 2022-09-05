@@ -279,7 +279,15 @@ header span:hover {
 }
 
 .pagina1 {
-	height: 256px;
+	height: fit-content;
+	min-height: 256px;
+}
+
+.pagina1 ul li span {
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 30px;
+	color: #ec362d;
 }
 
 .perguntas ul {

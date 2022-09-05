@@ -388,6 +388,7 @@ function validarStep1() {
 			return true;
 		} else {
 			quizzUserTitle.classList.add('show-error');
+			quizzUserTitle.nextElementSibling.classList.remove('hidden');
 			return false;
 		}
 	};
@@ -398,7 +399,8 @@ function validarStep1() {
 			testesAprovados++;
 			return true;
 		} catch (err) {
-			// valueURL.classList.add('show-error');
+			quizzUserUrl.classList.add('show-error');
+			quizzUserUrl.nextElementSibling.classList.remove('hidden');
 			return false;
 		}
 	};
@@ -413,6 +415,7 @@ function validarStep1() {
 			return true;
 		} else {
 			quizzUserHowManyQuestions.classList.add('show-error');
+			quizzUserHowManyQuestions.nextElementSibling.classList.remove('hidden');
 			return false;
 		}
 	};
@@ -427,6 +430,7 @@ function validarStep1() {
 			return true;
 		} else {
 			quizzUserHowManyLevels.classList.add('show-error');
+			quizzUserHowManyLevels.nextElementSibling.classList.remove('hidden');
 			return false;
 		}
 	};
