@@ -321,12 +321,14 @@ function showResults() {
 	const resultsDiv = document.querySelector('.results');
 	resultsDiv.innerHTML = '';
 	let score = Math.round((rightAnswers / qIndex) * 100);
+	console.log(score);
+	console.log(levels);
 
 	for (let i = 0; i < levels.length; i++) {
 		if (score <= levels[i].minValue) {
 			resultsDiv.innerHTML = `
 			<div class="results-header">
-				<p>${levels[i].minValue}</p>
+				<p>Você acertou ${score}%: ${levels[i].minValue}</p>
 			</div>
 			<div class="results-description">
 				<img src=${levels[i].image} alt="${levels[i].text}" />
@@ -336,7 +338,6 @@ function showResults() {
 			break;
 		}
 	}
-	console.log(resultsBox.innerHTML);
 }
 
 // Recomeçar o quizz
