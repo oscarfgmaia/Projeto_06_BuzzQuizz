@@ -332,6 +332,9 @@ function showResults() {
 
 function restartThisQuizz() {
 	resetVariables();
+	const resultsDiv = document.querySelector('.results');
+	resultsDiv.innerHTML = '';
+
 	getQuizzInfo(quizzUrl);
 	resultsBox.classList.add('hidden');
 	const quizzHeader = document.querySelector('.quizz-header');
